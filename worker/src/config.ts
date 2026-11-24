@@ -15,6 +15,10 @@ export interface Config {
   downloadTimeoutMs: number;
   /** Tests only: skip the SSRF guard for 127.0.0.1 test servers. Never set in containers. */
   allowPrivateHosts: boolean;
+  /** Storage API base URL on the compose network (bypasses the API gateway). */
+  storageUrl: string;
+  /** service_role key: only from the container env (never logged); the image job is off without it. */
+  storageKey: string | null;
 }
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -33,5 +37,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     pollSeconds: Math.max(5, Number(env.WORKER_POLL_SECONDS ?? 15) || 15),
     downloadTimeoutMs: Math.max(10_000, Number(env.WORKER_DOWNLOAD_TIMEOUT_MS ?? 60_000) || 60_000),
     allowPrivateHosts: false,
+    storageUrl: (env.STORAGE_URL ?? "http://storage:5000").replace(/\/$/, ""),
+    storageKey: env.STORAGE_SERVICE_KEY || null,
   };
 }

@@ -32,7 +32,7 @@ Market: Romania · Model: free for users; affiliate/CPC later (disabled now) · 
 - [x] Validation + normalization (price, currency, GTIN, MPN, brand, stock, shipping, categories)
 - [x] Matching: GTIN → brand+MPN → title similarity; match_queue
 - [x] Upsert offers + price history + expiry + run report
-- [ ] Image cache: download, thumbnail (sharp), Storage bucket `product-images` (not started: offers keep the shop image URL)
+- [x] Image cache: download, thumbnail (sharp), Storage bucket `product-images` (migration 0031, `worker/src/images/`; offers keep the shop URL, `products.image_path` points to the cached WebP)
 - [x] Sample feeds imported on DEV; second run proves expiry + price history
 
 ## Phase 3 — Public pages

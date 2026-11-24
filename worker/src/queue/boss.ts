@@ -1,4 +1,5 @@
 import { PgBoss } from "pg-boss";
+import { IMAGE_QUEUE } from "../images/job.js";
 import { log } from "../log.js";
 
 export const FEED_QUEUE = "feed-import";
@@ -30,6 +31,13 @@ export async function startBoss(connectionString: string): Promise<PgBoss> {
     retryLimit: 0,
     retentionSeconds: 7 * 24 * 3600,
     deleteAfterSeconds: 7 * 24 * 3600,
+  });
+  await boss.createQueue(IMAGE_QUEUE, {
+    policy: "singleton", // never two image jobs at once; extra sends while one runs/waits are dropped
+    expireInSeconds: 3600,
+    retryLimit: 0,
+    retentionSeconds: 24 * 3600,
+    deleteAfterSeconds: 24 * 3600,
   });
   return boss;
 }

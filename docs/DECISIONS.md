@@ -85,5 +85,33 @@ Newest first within each section. Legal items should still be reviewed by a lawy
 - The `feed_worker` password stays on the NAS: the role gets a SCRAM verifier computed in the worker image
   (the DB logs DDL), the connection string lives in `worker/worker.secret.env` (mode 600).
 
+## Product image cache
+- Shop images are never hot-linked (CSP `img-src` allows only self + Supabase). A separate pg-boss queue
+  `image-cache` (singleton, low priority) runs after each feed job, every 15 min and 20 s after start; it skips
+  while a feed is importing. Products with `image_path` null and an active offer with `image_url` are processed
+  in pages of `image_batch` (max 10 pages per run), 4 workers, per-host gate (`image_host_concurrency` 2,
+  `image_host_delay_ms` 300). Download reuses the feed downloader (SSRF guard on every hop, redirects) with
+  `image_max_bytes` 5 MB; the type is sniffed from the magic bytes (jpeg/png/webp/gif; SVG refused), decoded with
+  sharp (40 MP input cap, 1 thread, cache off), EXIF-rotated, fitted into 600x600 without enlarging, WebP q78,
+  metadata dropped. Object `p/<product_id>/<sha256-16>.webp` in the public bucket (2 MB, image/webp only), then
+  `products.image_path` + a `product_images` row. All thresholds are in `settings` (`image_*`).
+- Failures are recorded per offer (`offers.image_fail_count`, `image_last_error`, `image_checked_at`); after
+  `image_max_failures` (3) the offer is skipped, another active offer of the product is tried instead. A trigger
+  resets the counters when the feed changes `image_url`.
+- Upload path: the Storage API (`http://storage:5000`, compose network, not through the public gateway) with the
+  service_role key. Chosen over writing `storage.objects` + files directly (bypasses Storage's metadata and would
+  need file-system access) and over a custom JWT role (Storage switches to the claimed DB role, which needs extra
+  grants for the authenticator). The key is the only extra secret: `deploy-worker.sh` reads `SERVICE_ROLE_KEY` from
+  `supabase/.env` on the NAS inside the remote script and appends `STORAGE_SERVICE_KEY` to `worker.secret.env`
+  (mode 600); it is never printed, committed or logged (error bodies are scrubbed). Without it the job stays off.
+  Residual risk: a compromised worker holds a key that can write all Storage buckets; revisit when more buckets or
+  private files exist (then a dedicated Storage role or a small upload endpoint).
+- RLS: `storage.objects` has one policy, public SELECT on bucket `product-images`; no insert/update/delete policy,
+  so clients cannot write (anon POST returns 400).
+- DEV: with `WORKER_ALLOW_FIXTURES=1`, `https://fixtures.invalid/img/<name>` maps to `worker/fixtures/images/<name>`
+  and `*-test.example.ro` image URLs get one of the `sample-*` images by URL hash (no network). Inert elsewhere.
+- libvips (LGPL-3.0) ships inside sharp's prebuilt binary package, dynamically linked and replaceable: recorded as
+  a conscious exception to the "no LGPL" policy in THIRD_PARTY_NOTICES (we do not modify or statically link it).
+
 ## Versioning
 - Semver in `package.json`, starting at 0.1.0. Changelog in code (`src/lib/changelog/entries.ts`, en + ro).

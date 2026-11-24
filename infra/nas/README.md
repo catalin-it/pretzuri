@@ -53,6 +53,13 @@ time, image built with `nice`.
 - DEV sample data: `bash infra/nas/psql.sh dev < infra/nas/seed/dev-feeds.sql` (3 test merchants, 4 feed sources
   with `https://fixtures.invalid/<file>` URLs served from `worker/fixtures` because `WORKER_ALLOW_FIXTURES=1` in
   `env/worker-dev.env`; never set it on PROD).
+- Image cache: the worker also downloads product images, makes 600 px WebP thumbnails (sharp) and uploads them to
+  the public Storage bucket `product-images` (migration 0031) through `http://storage:5000` with the service_role key.
+  `deploy-worker.sh` copies `SERVICE_ROLE_KEY` from `supabase/.env` into `worker.secret.env` as `STORAGE_SERVICE_KEY`
+  on the NAS only (mode 600, never printed). Check: `curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8400/storage/v1/object/public/product-images/<image_path>`
+  returns 200. Progress: `select count(*) filter (where image_path is not null), count(*) from products;`; failed
+  images: `select image_last_error, count(*) from offers where image_fail_count > 0 group by 1;`. In DEV the fixture
+  image URLs are served from `worker/fixtures/images` (only with `WORKER_ALLOW_FIXTURES=1`).
 - Logs: `ssh pretzuri-nas "cd /volume1/docker/pretzuri-dev/worker && /usr/local/bin/docker compose -p pretzuri-dev-worker --env-file worker.env logs --tail 50"`.
 
 ## Public access: DNS, HTTPS, DSM

@@ -10,6 +10,13 @@ export interface Settings {
   feedMinRatio: number;
   feedMaxErrorsLogged: number;
   allowedCurrencies: string[];
+  imageMaxBytes: number;
+  imageMaxPx: number;
+  imageQuality: number;
+  imageMaxFailures: number;
+  imageBatch: number;
+  imageHostConcurrency: number;
+  imageHostDelayMs: number;
 }
 
 export const defaultSettings: Settings = {
@@ -21,6 +28,13 @@ export const defaultSettings: Settings = {
   feedMinRatio: 0.5,
   feedMaxErrorsLogged: 1000,
   allowedCurrencies: ["RON"],
+  imageMaxBytes: 5 * 1024 * 1024,
+  imageMaxPx: 600,
+  imageQuality: 78,
+  imageMaxFailures: 3,
+  imageBatch: 200,
+  imageHostConcurrency: 2,
+  imageHostDelayMs: 300,
 };
 
 function num(v: unknown, d: number): number {
@@ -44,5 +58,12 @@ export async function loadSettings(db: Queryable): Promise<Settings> {
     feedMinRatio: num(m.get("feed_min_ratio"), d.feedMinRatio),
     feedMaxErrorsLogged: num(m.get("feed_max_errors_logged"), d.feedMaxErrorsLogged),
     allowedCurrencies: strArr(m.get("allowed_currencies"), d.allowedCurrencies).map((s) => s.toUpperCase()),
+    imageMaxBytes: num(m.get("image_max_bytes"), d.imageMaxBytes),
+    imageMaxPx: num(m.get("image_max_px"), d.imageMaxPx),
+    imageQuality: num(m.get("image_quality"), d.imageQuality),
+    imageMaxFailures: num(m.get("image_max_failures"), d.imageMaxFailures),
+    imageBatch: num(m.get("image_batch"), d.imageBatch),
+    imageHostConcurrency: Math.max(1, num(m.get("image_host_concurrency"), d.imageHostConcurrency)),
+    imageHostDelayMs: num(m.get("image_host_delay_ms"), d.imageHostDelayMs),
   };
 }
