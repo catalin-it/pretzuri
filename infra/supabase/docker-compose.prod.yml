@@ -1,0 +1,8 @@
+# PROD-only overrides (loaded via COMPOSE_FILE in infra/nas/env/prod.env). The NAS is RAM-tight and shared.
+services:
+  studio:
+    mem_limit: 512m
+  meta:
+    mem_limit: 256m
+  imgproxy:
+    mem_limit: 256m

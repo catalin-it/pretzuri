@@ -1,0 +1,88 @@
+# Pretzuri overrides on top of the vendored upstream docker-compose.yml.
+# Loaded via COMPOSE_FILE in .env (see infra/nas/env/*.env).
+
+services:
+  realtime:
+    # Not used by Pretzuri (no chat / live updates): off unless COMPOSE_PROFILES contains "realtime".
+    profiles: ["realtime"]
+    networks:
+      default:
+        # Upstream relied on container_name for this hostname (the gateway routes to it and Realtime derives the
+        # tenant id from it). Container names are removed, so a network alias keeps it resolvable per project.
+        aliases:
+          - realtime-dev.supabase-realtime
+
+  # Serves the GoTrue email templates over the internal network (GoTrue fetches templates by URL).
+  # Tiny static server (busybox httpd); no published ports.
+  email-templates:
+    image: busybox:1.37.0
+    restart: unless-stopped
+    mem_limit: 16m
+    command: ["httpd", "-f", "-p", "80", "-h", "/www"]
+    volumes:
+      - ./volumes/email-templates:/www:ro
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:80/otp-code.html"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  auth:
+    depends_on:
+      email-templates:
+        condition: service_healthy
+    environment:
+      GOTRUE_MAILER_OTP_LENGTH: ${MAILER_OTP_LENGTH:-6}
+      GOTRUE_MAILER_OTP_EXP: ${MAILER_OTP_EXP:-900}
+      # Same template for sign-in (magic_link), first sign-up (confirmation) and reauthentication: shows the code only.
+      GOTRUE_MAILER_TEMPLATES_MAGIC_LINK: http://email-templates/otp-code.html
+      GOTRUE_MAILER_TEMPLATES_CONFIRMATION: http://email-templates/otp-code.html
+      GOTRUE_MAILER_TEMPLATES_REAUTHENTICATION: http://email-templates/otp-code.html
+      GOTRUE_MAILER_SUBJECTS_MAGIC_LINK: "${MAILER_SUBJECT_OTP:-Pretzuri: codul tău / your code}"
+      GOTRUE_MAILER_SUBJECTS_CONFIRMATION: "${MAILER_SUBJECT_OTP:-Pretzuri: codul tău / your code}"
+      GOTRUE_MAILER_SUBJECTS_REAUTHENTICATION: "${MAILER_SUBJECT_OTP:-Pretzuri: codul tău / your code}"
+      # Password sign-in is OPTIONAL (accounts are created by email code). Setting/changing a password needs a recent
+      # session or an email code, so a stolen session cannot plant a password. Length over composition (NIST 800-63B).
+      GOTRUE_PASSWORD_MIN_LENGTH: ${AUTH_PASSWORD_MIN_LENGTH:-10}
+      GOTRUE_SECURITY_UPDATE_PASSWORD_REQUIRE_REAUTHENTICATION: ${AUTH_PASSWORD_REQUIRE_REAUTH:-true}
+      # Rate limiting keyed on the real client IP. Behind Cloudflare (proxied) that is CF-Connecting-IP; the DSM rules
+      # only accept Cloudflare source IPs, so the header cannot be forged by hitting the origin directly
+      # (see infra/nas/README.md, "Cloudflare").
+      GOTRUE_RATE_LIMIT_HEADER: ${AUTH_RATE_LIMIT_HEADER:-}
+      GOTRUE_RATE_LIMIT_EMAIL_SENT: ${AUTH_RATE_LIMIT_EMAIL_SENT:-30}
+      GOTRUE_RATE_LIMIT_OTP: ${AUTH_RATE_LIMIT_OTP:-10}
+      GOTRUE_RATE_LIMIT_VERIFY: ${AUTH_RATE_LIMIT_VERIFY:-30}
+      GOTRUE_RATE_LIMIT_TOKEN_REFRESH: ${AUTH_RATE_LIMIT_TOKEN_REFRESH:-150}
+      GOTRUE_SESSIONS_TIMEBOX: ${AUTH_SESSIONS_TIMEBOX:-720h}
+      GOTRUE_SESSIONS_INACTIVITY_TIMEOUT: ${AUTH_SESSIONS_INACTIVITY_TIMEOUT:-336h}
+
+  # Local modification hook (see envoy/docker-entrypoint.sh): deny the Studio catch-all route when true.
+  api-gw:
+    environment:
+      GATEWAY_DENY_DASHBOARD: ${GATEWAY_DENY_DASHBOARD:-false}
+
+  # Price-alert sender (supabase/functions/*). Secrets come from supabase/.env on the NAS.
+  functions:
+    environment:
+      ALERTS_DISPATCH_SECRET: ${ALERTS_DISPATCH_SECRET:-}
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
+      VAPID_SUBJECT: ${VAPID_SUBJECT:-}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      SMTP_ADMIN_EMAIL: ${SMTP_ADMIN_EMAIL:-}
+      SMTP_SENDER_NAME: ${SMTP_SENDER_NAME:-}
+      SITE_URL: ${SITE_URL:-}
+
+  # Optional services, not started by default (RAM-tight shared NAS). Enable per env with COMPOSE_PROFILES in
+  # infra/nas/env/<env>.env, e.g. COMPOSE_PROFILES=studio,pooler (see infra/supabase/PRETZURI.md).
+  studio:
+    profiles: ["studio"]
+  meta:
+    profiles: ["studio"]
+  imgproxy:
+    profiles: ["imgproxy"]
+  supavisor:
+    profiles: ["pooler"]

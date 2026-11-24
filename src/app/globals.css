@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Light by default; dark follows the device. Text pairs are >= 4.5:1.
+ * Brand green (#0b6e4f) carries white text at 6.3:1; the price accent (#b3261e) is for drops / lowest price.
+ */
+:root {
+  color-scheme: light dark;
+  --background: #ffffff;
+  --surface: #f4f6f8;
+  --surface-raised: #ffffff;
+  --border: #8a96a3;
+  --border-subtle: #e3e8ee;
+  --text: #17202a;
+  --text-muted: #52606d;
+  --accent: #0b6e4f;
+  --accent-hover: #095c42;
+  --accent-text: #0b6e4f;
+  --accent-soft: rgb(11 110 79 / 0.1);
+  --accent-contrast: #ffffff;
+  --price-drop: #b3261e;
+  --promoted: #7a4b00;
+  --promoted-soft: rgb(122 75 0 / 0.1);
+  --focus-ring: #0b6e4f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0e1215;
+    --surface: #161b20;
+    --surface-raised: #1d242b;
+    --border: #6b7885;
+    --border-subtle: #2a323a;
+    --text: #eef2f5;
+    --text-muted: #a5b1bc;
+    --accent: #3ccf9a;
+    --accent-hover: #5bdcad;
+    --accent-text: #3ccf9a;
+    --accent-soft: rgb(60 207 154 / 0.14);
+    --accent-contrast: #062b1f;
+    --price-drop: #ff8a80;
+    --promoted: #ffc46b;
+    --promoted-soft: rgb(255 196 107 / 0.14);
+    --focus-ring: #3ccf9a;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-text: var(--accent-text);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-price-drop: var(--price-drop);
+  --color-promoted: var(--promoted);
+  --color-promoted-soft: var(--promoted-soft);
+}
+
+html {
+  background: var(--background);
+  color: var(--text);
+}
+
+body {
+  background: var(--background);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

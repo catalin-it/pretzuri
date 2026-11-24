@@ -1,0 +1,33 @@
+{
+  "Metadata": {
+    "title": "Pretzuri – compare prices from online shops",
+    "description": "Compare prices for the same product across Romanian online shops, see the price history and get alerts when it drops."
+  },
+  "Pwa": {
+    "description": "Price comparison: shop offers, price history and alerts."
+  },
+  "Header": {
+    "home": "Pretzuri – home"
+  },
+  "Search": {
+    "label": "Search for a product",
+    "placeholder": "Search products, brands, codes…",
+    "submit": "Search"
+  },
+  "Home": {
+    "title": "Compare prices. Shop smarter.",
+    "intro": "See shop offers for the same product, ordered by total price, with price history and the lowest price of the last 30 days."
+  },
+  "Footer": {
+    "disclosure": "Pretzuri does not sell products. Some links are affiliate links: we may earn a commission if you buy, at no extra cost to you. Commissions do not affect the order of offers."
+  },
+  "Offline": {
+    "title": "You are offline",
+    "body": "Prices change often, so we only show them when you are online. Please try again when you are back online."
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "body": "The product or page you are looking for is no longer available.",
+    "home": "Back to the home page"
+  }
+}

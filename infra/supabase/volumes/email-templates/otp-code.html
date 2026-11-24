@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Pretzuri</title>
+</head>
+<body style="margin:0;padding:24px;background:#f4f6f8;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#17202a;">
+  <div style="max-width:420px;margin:0 auto;background:#ffffff;border-radius:16px;padding:32px;text-align:center;">
+    <h1 style="margin:0 0 16px;font-size:28px;font-weight:700;letter-spacing:-0.5px;color:#0b6e4f;">Pretzuri</h1>
+{{ if and .Data .Data.locale (eq .Data.locale "en") }}
+    <p style="margin:0 0 16px;font-size:16px;">Your sign-in code is:</p>
+    <p style="margin:0 0 16px;font-size:36px;font-weight:700;letter-spacing:8px;">{{ .Token }}</p>
+    <p style="margin:0;font-size:13px;color:#5d6d7e;">This code expires in 15 minutes. If you didn't request it, you can ignore this email.</p>
+    <p style="margin:24px 0 0;font-size:12px;color:#5d6d7e;">Sent by Pretzuri.</p>
+{{ else }}
+    <p style="margin:0 0 16px;font-size:16px;">Codul tău de autentificare este:</p>
+    <p style="margin:0 0 16px;font-size:36px;font-weight:700;letter-spacing:8px;">{{ .Token }}</p>
+    <p style="margin:0;font-size:13px;color:#5d6d7e;">Codul expiră în 15 minute. Dacă nu l-ai cerut tu, ignoră acest email.</p>
+    <p style="margin:24px 0 0;font-size:12px;color:#5d6d7e;">Mesaj trimis de Pretzuri.</p>
+{{ end }}
+  </div>
+</body>
+</html>

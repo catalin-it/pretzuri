@@ -1,0 +1,33 @@
+{
+  "Metadata": {
+    "title": "Pretzuri – compară prețuri din magazinele online",
+    "description": "Compară prețurile aceluiași produs în magazinele online din România, vezi istoricul prețului și primește alerte când scade."
+  },
+  "Pwa": {
+    "description": "Comparator de prețuri: oferte din magazine, istoric de preț și alerte."
+  },
+  "Header": {
+    "home": "Pretzuri – pagina principală"
+  },
+  "Search": {
+    "label": "Caută un produs",
+    "placeholder": "Caută produse, branduri, coduri…",
+    "submit": "Caută"
+  },
+  "Home": {
+    "title": "Compară prețuri. Cumpără mai inteligent.",
+    "intro": "Vezi ofertele magazinelor pentru același produs, ordonate după prețul total, cu istoricul prețului și cel mai mic preț din ultimele 30 de zile."
+  },
+  "Footer": {
+    "disclosure": "Pretzuri nu vinde produse. Unele linkuri sunt linkuri afiliate: putem primi un comision dacă cumperi, fără cost suplimentar pentru tine. Comisioanele nu influențează ordinea ofertelor."
+  },
+  "Offline": {
+    "title": "Ești offline",
+    "body": "Prețurile se schimbă des, așa că le afișăm doar cu conexiune la internet. Încearcă din nou când revii online."
+  },
+  "NotFound": {
+    "title": "Pagina nu există",
+    "body": "Produsul sau pagina căutată nu mai este disponibilă.",
+    "home": "Înapoi la pagina principală"
+  }
+}

@@ -1,0 +1,15 @@
+# DEV only: Mailpit mail catcher. Added through COMPOSE_FILE in infra/nas/env/dev.env (never in prod).
+# SMTP (1025) is reachable on the compose network only; the web UI is published on the LAN behind basic auth.
+services:
+  mailpit:
+    image: axllent/mailpit:v1.32.0
+    restart: unless-stopped
+    mem_limit: 64m
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: "1"
+      MP_SMTP_AUTH_ALLOW_INSECURE: "1"
+      MP_MAX_MESSAGES: "500"
+      # Basic auth for the web UI + API (user "pretzuri"). Password generated on the NAS (hex, no special chars).
+      MP_UI_AUTH: "pretzuri:${MAILPIT_UI_PASS:?run remote-apply.sh to generate MAILPIT_UI_PASS}"
+    ports:
+      - "${MAILPIT_BIND_IP:-127.0.0.1}:${MAILPIT_UI_PORT:?set MAILPIT_UI_PORT}:8025"
