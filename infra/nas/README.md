@@ -37,6 +37,24 @@ Resource limits: the Synology kernel has no CFS quota support, so `cpus:` cannot
 Default Supabase services: db, auth, rest, storage, functions, api-gw, email-templates (+ mailpit on DEV).
 Realtime, Studio, imgproxy and the pooler are off (profiles, see `infra/supabase/PRETZURI.md`).
 
+## Feed worker
+Compose project `pretzuri-<env>-worker` (`infra/worker/docker-compose.yml`), folder `<env folder>/worker`
+(`src/`, `docker-compose.yml`, `worker.env`, `worker.secret.env`). No published ports; it joins the Supabase
+network `pretzuri-<env>_default` and connects to host `db` as role `feed_worker` (table grants in migration 0006,
+pg-boss tables in schema `pgboss`). Limits: `mem_limit: 768m`, `cpu_shares: 256`, Node heap 384 MB, one feed at a
+time, image built with `nice`.
+
+- `bash infra/nas/deploy-worker.sh dev`: syncs `worker/`, builds `pretzuri-worker:dev`, sets the `feed_worker`
+  login (SCRAM verifier, so the password is not in the DB log), writes `worker.secret.env` (`DATABASE_URL`, mode 600,
+  from `FEED_WORKER_DB_PASSWORD` in `supabase/.env`) and recreates the container. PROD needs `--yes`.
+- Imports run from `import_requests` (pg_cron `enqueue_due_feeds` every 5 min for due sources, or manual):
+  `echo "insert into import_requests (feed_source_id) values (<id>) on conflict do nothing;" | bash infra/nas/psql.sh dev`.
+  Results: `select * from feed_runs order by id desc limit 5;` and `feed_run_errors`.
+- DEV sample data: `bash infra/nas/psql.sh dev < infra/nas/seed/dev-feeds.sql` (3 test merchants, 4 feed sources
+  with `https://fixtures.invalid/<file>` URLs served from `worker/fixtures` because `WORKER_ALLOW_FIXTURES=1` in
+  `env/worker-dev.env`; never set it on PROD).
+- Logs: `ssh pretzuri-nas "cd /volume1/docker/pretzuri-dev/worker && /usr/local/bin/docker compose -p pretzuri-dev-worker --env-file worker.env logs --tail 50"`.
+
 ## Public access: DNS, HTTPS, DSM
 
 **Current state (2026-11-25):** the `it-ist.ro` zone is hosted at **ClouDNS** (ns41–44.cloudns.net), not at

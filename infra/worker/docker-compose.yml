@@ -1,0 +1,25 @@
+# Pretzuri feed worker. Separate compose project (<project>-worker); reaches the database as host `db` on the
+# Supabase project's network. No published ports. Image built by infra/nas/deploy-worker.sh.
+name: ${COMPOSE_PROJECT_NAME:?COMPOSE_PROJECT_NAME is required (e.g. pretzuri-dev-worker)}
+
+services:
+  worker:
+    image: pretzuri-worker:${PRETZURI_ENV:?PRETZURI_ENV is required (dev|prod)}
+    restart: unless-stopped
+    mem_limit: 768m
+    # The Synology kernel has no CFS quota support (`cpus:` fails): low relative CPU weight instead (default 1024).
+    cpu_shares: 256
+    env_file:
+      - worker.env
+      # DATABASE_URL, written on the NAS (mode 600) by deploy-worker.sh from FEED_WORKER_DB_PASSWORD; never committed.
+      - worker.secret.env
+    stop_grace_period: 30s
+    networks: [supabase]
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "3" }
+
+networks:
+  supabase:
+    name: ${SUPABASE_NETWORK:?SUPABASE_NETWORK is required (e.g. pretzuri-dev_default)}
+    external: true
