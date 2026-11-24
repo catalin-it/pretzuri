@@ -4,25 +4,25 @@ Market: Romania · Model: free for users; affiliate/CPC later (disabled now) · 
 ## Phase 0 — Setup
 - [x] Project rules: `AGENTS.md`, `CLAUDE.md`, `.claude/agents`, `.claude/skills`, docs
 - [x] Git repo `catalin-it/pretzuri` (private), deploy key via SSH alias `github-pretzuri`
-- [ ] App skeleton: Next.js 16 + TS strict + Tailwind + next-intl (`ro` default, `en`) + Serwist + Vitest + Playwright
-- [ ] `infra/supabase` vendored (self-hosted v0.8.4) + `PRETZURI.md` with local changes, pg_cron + pg_trgm
-- [ ] `infra/nas` scripts: deploy-supabase, deploy-web, deploy-worker, db-migrate, gen-types, psql, dev-up, dev-down, backup-prod
-- [ ] Supabase DEV on the NAS (`pretzuri-dev`, 127.0.0.1:8400) + Mailpit (8425)
-- [ ] Web DEV container (`pretzuri-dev-web`, 127.0.0.1:3400)
+- [x] App skeleton: Next.js 16 + TS strict + Tailwind + next-intl (`ro` default, `en`) + Serwist + Vitest + Playwright
+- [x] `infra/supabase` vendored (self-hosted v0.8.4) + `PRETZURI.md` with local changes, pg_cron + pg_trgm
+- [x] `infra/nas` scripts: deploy-supabase, deploy-web, deploy-worker, db-migrate, gen-types, psql, dev-up, dev-down, backup-prod
+- [x] Supabase DEV on the NAS (`pretzuri-dev`, 127.0.0.1:8400) + Mailpit (8425)
+- [x] Web DEV container (`pretzuri-dev-web`, 127.0.0.1:3400)
 - [ ] Cloudflare DNS + "Always Use HTTPS", DSM Reverse Proxy rules, origin certificate (user, steps in `infra/nas/README.md`)
 - [ ] Verified: `https://dev-pretzuri.it-ist.ro/ro` and `https://api-dev-pretzuri.it-ist.ro/auth/v1/health`
 
 ## Phase 1 — Database
-- [ ] Extensions (pg_trgm, pg_cron, unaccent) + FTS config `simple_unaccent`
-- [ ] Catalog: categories (seeded tree), brands (+aliases), products, product_images
-- [ ] Merchants, feed_sources, category_mappings, settings
-- [ ] Offers, price_history, 30-day lowest price functions (Omnibus)
-- [ ] Import tables: import_requests, feed_runs, feed_run_errors, match_queue
-- [ ] Users: profiles, user_roles/is_admin, favorites, price_alerts, push_subscriptions, view_history
-- [ ] Reviews (pre-moderation, reports, moderation log)
-- [ ] Clicks (+ daily aggregates), monetization tables (cpc_rates, promotions, affiliate_commissions) disabled
-- [ ] Role `feed_worker` with minimal grants; RLS audit green; SQL tests
-- [ ] pg_cron: expire offers, enqueue due feeds, retention (view_history, clicks), aggregates
+- [x] Extensions (pg_trgm, pg_cron, unaccent) + FTS config `simple_unaccent`
+- [x] Catalog: categories (seeded tree), brands (+aliases), products, product_images
+- [x] Merchants, feed_sources, category_mappings, settings
+- [x] Offers, price_history, 30-day lowest price functions (Omnibus)
+- [x] Import tables: import_requests, feed_runs, feed_run_errors, match_queue
+- [x] Users: profiles, user_roles/is_admin, favorites, price_alerts, push_subscriptions, view_history
+- [x] Reviews (pre-moderation, reports, moderation log)
+- [x] Clicks (+ daily aggregates), monetization tables (cpc_rates, promotions, affiliate_commissions) disabled
+- [x] Role `feed_worker` with minimal grants; RLS audit green; SQL tests
+- [x] pg_cron: expire offers, enqueue due feeds, retention (view_history, clicks), aggregates
 
 ## Phase 2 — Feed import
 - [ ] Worker package (`worker/`), Dockerfile, compose with limits, `deploy-worker.sh`
