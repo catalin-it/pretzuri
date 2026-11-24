@@ -65,11 +65,11 @@ export class Matcher {
         "select id from public.products where brand_id = $1 and mpn_norm = $2 and status <> 'merged' order by id limit 5",
         [brandId, offer.mpnNorm],
       );
-      if (r.rows.length === 1) {
+      if (r.rows.length === 1 && !(await this.contradicts(r.rows[0]!.id, offer, false))) {
         await this.enrich(r.rows[0]!.id, input, true);
         return { productId: r.rows[0]!.id, method: "mpn", score: 0.95, createdProduct: false };
       }
-      if (r.rows.length > 1) {
+      if (r.rows.length >= 1) {
         const pid = await this.createProduct(input, { withGtin: true, withMpn: false });
         return {
           productId: pid,
@@ -85,7 +85,9 @@ export class Matcher {
     const scored = await this.titleCandidates(input);
     const best = scored[0];
     if (best) {
-      const d = decide(best, s);
+      let d = decide(best, s);
+      // A title match never overrides hard identifiers: a different GTIN or MPN sends it to review instead.
+      if (d === "auto" && (await this.contradicts(best.productId, offer, true))) d = "review";
       if (d === "auto") {
         await this.enrich(best.productId, input, true);
         return { productId: best.productId, method: "title", score: best.score, createdProduct: false };
@@ -135,6 +137,23 @@ export class Matcher {
     return r.rows
       .map((row) => ({ productId: row.id, ...scoreTitles(mine, row.title) }))
       .sort((a, b) => b.score - a.score);
+  }
+
+  /**
+   * True when the product's known identifiers contradict the offer: it already has GTINs and the offer's GTIN is not
+   * one of them, or (when checkMpn) both have usable MPNs that differ.
+   */
+  private async contradicts(productId: number, offer: NormalizedOffer, checkMpn: boolean): Promise<boolean> {
+    const r = await this.db.query<{ gtins: string[]; mpn_norm: string | null }>(
+      "select gtins, mpn_norm from public.products where id = $1",
+      [productId],
+    );
+    const p = r.rows[0];
+    if (!p) return true;
+    if (offer.gtin && p.gtins.length > 0 && !p.gtins.includes(offer.gtin)) return true;
+    const usable = isUsableMpn(offer.mpnNorm, this.settings.mpnMinLength, this.settings.mpnStoplist);
+    if (checkMpn && usable && p.mpn_norm && p.mpn_norm !== offer.mpnNorm) return true;
+    return false;
   }
 
   /** Adds missing GTIN / MPN / brand / category to a matched product (never overwrites). */

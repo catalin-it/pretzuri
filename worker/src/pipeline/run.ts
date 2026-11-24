@@ -24,6 +24,9 @@ interface SourceRow {
   has_affiliate: boolean;
 }
 
+/** Hard cap per run: bounds the memory of the per-run id set (about 100 bytes per id). */
+const MAX_ROWS_PER_RUN = 2_000_000;
+
 export type RunStatus = "ok" | "partial" | "not_modified" | "failed";
 
 export interface RunOutcome {
@@ -76,6 +79,8 @@ export async function runFeed(db: Db, config: Config, feedSourceId: number, sign
     });
     if (dl.notModified) {
       status = "not_modified";
+      // Unchanged feed: its offers are still current, so keep them from being expired by expire_stale_offers().
+      await db.query("update public.offers set last_seen_at = now() where feed_source_id = $1 and is_active", [feedSourceId]);
       await db.query(
         `update public.feed_sources set last_run_at = now(), next_run_at = now() + make_interval(mins => schedule_minutes)
          where id = $1`,
@@ -85,7 +90,6 @@ export async function runFeed(db: Db, config: Config, feedSourceId: number, sign
       const brands = new BrandResolver(db);
       const cats = new CategoryResolver(db, source.merchant_id);
       await cats.load();
-      const matcher = new Matcher(db, settings);
       const touched = new Set<number>();
       const seen = new Set<string>();
       let skippedInactive = 0;
@@ -94,7 +98,19 @@ export async function runFeed(db: Db, config: Config, feedSourceId: number, sign
       const flush = async () => {
         const b = batch;
         batch = [];
-        await writeBatch(db, matcher, ctx, b, counters, touched);
+        if (!b.length) return;
+        // One transaction per batch: products, offers, price history and queue rows land together or not at all.
+        const client = await db.connect();
+        try {
+          await client.query("begin");
+          await writeBatch(client, new Matcher(client, settings), ctx, b, counters, touched);
+          await client.query("commit");
+        } catch (e) {
+          await client.query("rollback").catch(() => undefined);
+          throw e;
+        } finally {
+          client.release();
+        }
         sampleRss(counters);
       };
 
@@ -118,6 +134,7 @@ export async function runFeed(db: Db, config: Config, feedSourceId: number, sign
         }
         const o = n.offer;
         for (const w of n.warnings) await errors.add(ev.row, o.externalId, w.field, w.reason);
+        if (seen.size >= MAX_ROWS_PER_RUN) throw new Error(`feed exceeds ${MAX_ROWS_PER_RUN} rows; split it or raise MAX_ROWS_PER_RUN`);
         if (seen.has(o.externalId)) {
           counters.rows_invalid++;
           await errors.add(ev.row, o.externalId, "id", "duplicate id in this feed (first row kept)");
@@ -141,10 +158,15 @@ export async function runFeed(db: Db, config: Config, feedSourceId: number, sign
       if (skippedInactive) notes.push(`${skippedInactive} inactive rows skipped`);
       if (brands.created) notes.push(`${brands.created} new brands`);
 
-      // Expire offers of this source not seen in this run, unless the feed shrank suspiciously.
+      // Expire offers of this source not seen in this run, unless the feed shrank suspiciously or is mostly invalid.
       const prev = source.last_row_count;
       let expirySkipped = false;
-      if (prev && counters.rows_valid < prev * settings.feedMinRatio) {
+      const mostlyInvalid = counters.rows_read > 0 && counters.rows_invalid > counters.rows_read / 2;
+      if (mostlyInvalid) {
+        status = "partial";
+        expirySkipped = true;
+        notes.push("more than half of the rows are invalid: expiry skipped");
+      } else if (prev && counters.rows_valid < prev * settings.feedMinRatio) {
         status = "partial";
         expirySkipped = true;
         notes.push(`expiry skipped: ${counters.rows_valid} valid rows < ${settings.feedMinRatio} x previous ${prev}`);
@@ -157,10 +179,6 @@ export async function runFeed(db: Db, config: Config, feedSourceId: number, sign
         );
         counters.offers_expired = ex.rowCount ?? 0;
         for (const r of ex.rows) touched.add(r.product_id);
-      }
-      if (counters.rows_read > 0 && counters.rows_invalid > counters.rows_read / 2) {
-        status = "partial";
-        notes.push("more than half of the rows are invalid");
       }
 
       const ids = [...touched];

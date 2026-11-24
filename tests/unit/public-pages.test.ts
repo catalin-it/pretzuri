@@ -62,24 +62,25 @@ describe("listing params", () => {
 });
 
 describe("Omnibus display", () => {
-  it("shows no reduction without old price or 30-day reference", () => {
-    expect(omnibusDisplay({ price: 100, oldPrice: null, lowest30d: 90, historyDays: 30 }).kind).toBe("none");
+  it("shows no reduction without a prior 30-day reference above the current price", () => {
     expect(omnibusDisplay({ price: 100, oldPrice: 120, lowest30d: null, historyDays: 30 }).kind).toBe("none");
-    expect(omnibusDisplay({ price: 100, oldPrice: 100, lowest30d: 100, historyDays: 30 }).kind).toBe("none");
+    expect(omnibusDisplay({ price: 100, oldPrice: 120, lowest30d: 100, historyDays: 30 }).kind).toBe("none");
+    // The feed's old price alone never creates a discount (lowest of the last 30 days was lower).
+    expect(omnibusDisplay({ price: 80, oldPrice: 100, lowest30d: 75, historyDays: 30 }).kind).toBe("none");
   });
-  it("shows the full 30-day reference", () => {
-    expect(omnibusDisplay({ price: 80, oldPrice: 100, lowest30d: 75, historyDays: 30 })).toEqual({
+  it("computes the reduction against the 30-day reference, not the feed old price", () => {
+    expect(omnibusDisplay({ price: 80, oldPrice: 200, lowest30d: 100, historyDays: 30 })).toEqual({
       kind: "reduction",
       oldPrice: 100,
       percent: 20,
-      lowest: 75,
+      lowest: 100,
       days: 30,
       partial: false,
     });
   });
   it("marks a partial history with the tracked days (at least 1)", () => {
-    expect(omnibusDisplay({ price: 80, oldPrice: 100, lowest30d: 80, historyDays: 12 })).toMatchObject({ days: 12, partial: true });
-    expect(omnibusDisplay({ price: 80, oldPrice: 100, lowest30d: 80, historyDays: 0 })).toMatchObject({ days: 1, partial: true });
+    expect(omnibusDisplay({ price: 80, oldPrice: null, lowest30d: 100, historyDays: 12 })).toMatchObject({ days: 12, partial: true });
+    expect(omnibusDisplay({ price: 80, oldPrice: null, lowest30d: 100, historyDays: 0 })).toMatchObject({ days: 1, partial: true });
   });
 });
 
