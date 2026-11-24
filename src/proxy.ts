@@ -2,7 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
-import { getSupabaseEnv } from "./lib/supabase/env";
+import { getSupabaseEnv, serverAuthFetch } from "./lib/supabase/env";
 import { buildCsp, generateNonce } from "./lib/security/csp";
 
 // Next.js 16 `proxy` (formerly middleware):
@@ -31,7 +31,9 @@ export default async function proxy(request: NextRequest) {
   const hasSession = request.cookies.getAll().some((c) => c.name.startsWith("sb-"));
   if (hasSession) {
     const { url, anonKey } = getSupabaseEnv();
+    const fetchImpl = serverAuthFetch();
     const supabase = createServerClient(url, anonKey, {
+      ...(fetchImpl ? { global: { fetch: fetchImpl } } : {}),
       cookies: {
         getAll: () => request.cookies.getAll(),
         setAll(cookiesToSet, headers) {

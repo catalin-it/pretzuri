@@ -33,6 +33,26 @@ Newest first within each section. Legal items should still be reviewed by a lawy
 - An offer without a confident match becomes a **new canonical product, visible immediately**, and goes into the
   manual review queue; admin can merge it later. A false merge is worse than a duplicate.
 
+## Accounts & price alerts (2026-11-25, Phase 4; agent decisions while the founder was away, review welcome)
+- Sign-in: email code (6 digits) creates the account on first use; password is optional and can only be set/changed
+  with a reauthentication code. All auth calls go through server actions (the browser never calls Supabase), with the
+  server client created on the public API URL (cookie names) but fetching via `SUPABASE_INTERNAL_URL`.
+- Price alerts compare the target with the product's lowest **total** price (price + shipping) among active offers
+  that are not out of stock (same basis as the ranking). Fire when `price <= target`; after a notification, again only
+  when the price drops below the last notified price or after 7 days. Changing the target or re-activating resets it.
+  SQL `evaluate_price_alerts()` is authoritative; `src/lib/alerts/rules.ts` mirrors it for tests/UI.
+- Delivery: pg_cron every 15 min -> outbox (`alert_outbox`, server-only) -> pg_net -> edge function `alerts-dispatch`
+  (shared secret from NAS `.env`, copied into Vault by `remote-apply.sh`). 5 attempts, 30-day outbox retention.
+  Dead push subscriptions (404/410) are deleted. Email texts in the profile locale (ro/en).
+- Global "email alerts" switch in the profile; push is per alert. Unsubscribe link in every email = `/cont/alerte`
+  (sign-in required); a tokenized one-click unsubscribe is an open item.
+- Account deletion: typed confirmation (account email) + RPC `delete_my_account()` deleting the auth user (all user
+  data cascades; DSA report rows keep the report without the reporter). Export: JSON built from the user's own rows
+  (push subscriptions only as push-service origin, never keys/endpoints).
+- View history: server-side upsert on each product page view of a signed-in user (after the response), 90-day
+  retention (existing cron). Up to 10 push devices per account.
+- Review reports (DSA notices) require sign-in for now (schema: `reporter_id`); see LEGAL-QUESTIONS.
+
 ## Reviews (2026-11-24)
 - Merchant reviews: only logged-in users, **pre-moderated** (visible after admin approval), "Raportează" button
   (DSA notice), moderation log with statement of reasons.

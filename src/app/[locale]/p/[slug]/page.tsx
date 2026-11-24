@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
+import { after } from "next/server";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
@@ -8,6 +9,12 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { OffersList } from "@/components/product/offers-list";
 import { PriceHistory } from "@/components/product/price-history";
 import { ProductImage } from "@/components/product/product-image";
+import { AlertForm } from "@/components/account/alert-form";
+import { FavoriteButton } from "@/components/account/favorite-button";
+import { getProductUserState, viewRecorder } from "@/lib/account/queries";
+import { alertPrice, suggestedTarget } from "@/lib/alerts/rules";
+import { getSessionUser } from "@/lib/auth/session";
+import { loginHref } from "@/lib/auth/links";
 import { SITE_URL } from "@/lib/app-version";
 import {
   type ProductDetail,
@@ -68,12 +75,16 @@ export default async function ProductPage({ params }: Props) {
   const brand = one(product.brand);
   const category = one(product.category);
 
-  const [offers, history, lowest30, tree] = await Promise.all([
+  const [offers, history, lowest30, tree, user] = await Promise.all([
     getProductOffers(product.id),
     getPriceHistory(product.id),
     getProductLowest30d(product.id),
     getCategoryTree(),
+    getSessionUser(),
   ]);
+  const userState = user ? await getProductUserState(product.id) : null;
+  // View history (signed-in users only): one upsert after the response is sent.
+  if (user) after(await viewRecorder(user.id, product.id));
 
   const crumbs: Crumb[] = [];
   if (category) {
@@ -100,7 +111,10 @@ export default async function ProductPage({ params }: Props) {
   const low = totals.length ? Math.min(...totals) : null;
   const high = totals.length ? Math.max(...totals) : null;
   const url = `${SITE_URL}/${locale}/p/${product.slug}`;
-  const loginHref = `/cont/autentificare?next=${encodeURIComponent(`/${locale}/p/${product.slug}`)}`;
+  const returnTo = `/${locale}/p/${product.slug}`;
+  const alertCurrent = alertPrice(
+    offers.map((o) => ({ totalPrice: Number(o.total_price ?? o.price), isActive: true, availability: o.availability })),
+  );
 
   return (
     <article className="flex flex-col gap-6">
@@ -124,15 +138,28 @@ export default async function ProductPage({ params }: Props) {
           {lowest30 !== null ? (
             <p className="text-sm text-muted">{t("lowest30", { price: formatPrice(lowest30, locale as Locale) })}</p>
           ) : null}
-          <div className="flex flex-wrap gap-2">
-            <Link href={loginHref} className="rounded-lg border border-border px-3 py-2 text-sm">
-              {t("favorite")}
-            </Link>
-            <Link href={loginHref} className="rounded-lg border border-border px-3 py-2 text-sm">
-              {t("alert")}
-            </Link>
+          <div className="flex flex-wrap items-start gap-2">
+            <FavoriteButton
+              productId={product.id}
+              title={product.title}
+              initial={userState?.favorite ?? false}
+              signedIn={!!user}
+              returnTo={returnTo}
+            />
+            {user ? (
+              <AlertForm
+                productId={product.id}
+                currentPrice={alertCurrent}
+                suggested={suggestedTarget(alertCurrent)}
+                initial={userState?.alert ?? null}
+              />
+            ) : (
+              <a href={loginHref(returnTo)} className="rounded-lg border border-border px-3 py-2 text-sm hover:bg-surface">
+                {t("alert")}
+              </a>
+            )}
           </div>
-          <p className="text-xs text-muted">{t("accountsSoon")}</p>
+          {!user ? <p className="text-xs text-muted">{t("accountsHint")}</p> : null}
         </div>
       </div>
 

@@ -8,6 +8,11 @@ import { isProductSlug } from "@/lib/compare/slugs";
 import { formatDate, formatNumber } from "@/lib/format";
 import { safeDestination } from "@/lib/go/redirect";
 import { localeAlternates } from "@/lib/seo";
+import { ReviewForm } from "@/components/reviews/review-form";
+import { ReportReview } from "@/components/reviews/report-review";
+import { getOwnReview, getReportedReviewIds } from "@/lib/account/queries";
+import { getSessionUser } from "@/lib/auth/session";
+import { loginHref } from "@/lib/auth/links";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
@@ -30,7 +35,12 @@ export default async function MerchantPage({ params }: Props) {
   if (!m) notFound();
   const loc = locale as Locale;
   const t = await getTranslations("MerchantPage");
-  const [offerCount, reviews] = await Promise.all([getMerchantOfferCount(m.id), getApprovedReviews(m.id)]);
+  const [offerCount, reviews, user] = await Promise.all([getMerchantOfferCount(m.id), getApprovedReviews(m.id), getSessionUser()]);
+  const [own, reported] = user
+    ? await Promise.all([getOwnReview(m.id), getReportedReviewIds(reviews.map((r) => r.id))])
+    : [null, new Set<number>()];
+  const tr = await getTranslations("Reviews");
+  const returnTo = `/${locale}/magazin/${m.slug}`;
   const website = safeDestination(m.website);
 
   return (
@@ -81,6 +91,13 @@ export default async function MerchantPage({ params }: Props) {
           {t("reviewsTitle", { count: reviews.length })}
         </h2>
         <p className="text-sm text-muted">{t("reviewsNote")}</p>
+        {user ? (
+          <ReviewForm merchantId={m.id} own={own} />
+        ) : (
+          <a href={loginHref(returnTo)} className="w-fit rounded-lg border border-border px-3 py-2 text-sm hover:bg-surface">
+            {tr("signInToWrite")}
+          </a>
+        )}
         {reviews.length === 0 ? (
           <p className="text-muted">{t("noReviews")}</p>
         ) : (
@@ -93,6 +110,13 @@ export default async function MerchantPage({ params }: Props) {
                 </p>
                 <p className="whitespace-pre-line text-sm">{r.body}</p>
                 <p className="text-xs text-muted">{formatDate(r.created_at, loc)}</p>
+                {user ? (
+                  <ReportReview reviewId={r.id} reported={reported.has(r.id)} />
+                ) : (
+                  <a href={loginHref(returnTo)} className="text-xs underline">
+                    {tr("signInToReport")}
+                  </a>
+                )}
               </li>
             ))}
           </ul>

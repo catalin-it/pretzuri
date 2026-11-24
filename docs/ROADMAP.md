@@ -49,10 +49,10 @@ Market: Romania · Model: free for users; affiliate/CPC later (disabled now) · 
 - [ ] PWA: manifest, service worker, offline page, install prompt
 
 ## Phase 4 — Accounts & alerts
-- [ ] Auth: email code + optional password (Mailpit on DEV)
-- [ ] Favorites, view history (90 days), account deletion + data export (GDPR)
-- [ ] Price alerts: target price, push (VAPID) + email, unsubscribe
-- [ ] Merchant reviews: submit, report (DSA)
+- [x] Auth: email code + optional password (Mailpit on DEV)
+- [x] Favorites, view history (90 days), account deletion + data export (GDPR)
+- [x] Price alerts: target price, push (VAPID) + email, unsubscribe
+- [x] Merchant reviews: submit, report (DSA)
 
 ## Phase 5 — Admin
 - [ ] Feed sources (CRUD, run now, run reports)

@@ -15,6 +15,7 @@ import {
 } from "@/lib/listing/params";
 import { specText } from "@/lib/storage";
 import { ProductCard } from "./product-card";
+import { getFavoriteIds } from "@/lib/account/queries";
 import { AutoSubmitSelect } from "./auto-submit-select";
 
 type Props = {
@@ -31,7 +32,11 @@ const FORM_ID = "listing-filters";
 
 /** Results + facets + sort + pagination. Plain GET form and links: works without JavaScript. */
 export async function ListingView({ params, items, total, facets, basePath, defaultSort }: Props) {
-  const [t, locale] = await Promise.all([getTranslations("Listing"), getLocale() as Promise<Locale>]);
+  const [t, locale, favorites] = await Promise.all([
+    getTranslations("Listing"),
+    getLocale() as Promise<Locale>,
+    getFavoriteIds(items.map((i) => Number(i.id))),
+  ]);
   const pages = totalPages(total);
   const action = `/${locale}${basePath}`;
   const sorts = SORTS.filter((s) => s !== "relevance" || params.q);
@@ -162,7 +167,7 @@ export async function ListingView({ params, items, total, facets, basePath, defa
         ) : (
           <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
             {items.map((item) => (
-              <ProductCard key={item.id} item={item} />
+              <ProductCard key={item.id} item={item} favorite={favorites ? favorites.has(Number(item.id)) : null} />
             ))}
           </ul>
         )}

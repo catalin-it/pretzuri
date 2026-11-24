@@ -22,3 +22,7 @@ For the founder and a lawyer. Agents add questions here instead of assuming. Mar
 9. **Cookies/consent:** only essential cookies (session, locale), no third-party tracking. Is a banner still needed,
    or only an information page?
 10. **Price alert emails/push:** consent wording and unsubscribe requirements (ePrivacy / Romanian Law 506/2004).
+    Current state (Phase 4): the email links to `/cont/alerte` (sign-in required) plus a `List-Unsubscribe` header to
+    the same page; is a no-login one-click unsubscribe (RFC 8058) required for these transactional alerts?
+11. **DSA notices without an account:** review reports currently require sign-in. Must notice & action (Art. 16) be
+    open to anyone (e.g. a form with an email address)?

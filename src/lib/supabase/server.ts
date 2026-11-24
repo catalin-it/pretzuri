@@ -1,14 +1,19 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import type { Database } from "@/lib/database.types";
-import { getSupabaseEnv } from "./env";
+import { getSupabaseEnv, serverAuthFetch } from "./env";
 
-/** Server Supabase client bound to the request cookies (anon key only). */
+/**
+ * Server Supabase client bound to the request cookies (anon key only). Created with the public URL (cookie names)
+ * but talks to the internal gateway when SUPABASE_INTERNAL_URL is set (see serverAuthFetch).
+ */
 export async function createClient() {
   const cookieStore = await cookies();
   const { url, anonKey } = getSupabaseEnv();
+  const fetchImpl = serverAuthFetch();
 
   return createServerClient<Database>(url, anonKey, {
+    ...(fetchImpl ? { global: { fetch: fetchImpl } } : {}),
     cookies: {
       getAll() {
         return cookieStore.getAll();

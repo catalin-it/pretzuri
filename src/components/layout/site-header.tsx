@@ -3,9 +3,15 @@ import { Link } from "@/i18n/navigation";
 import { SearchBox } from "@/components/search/search-box";
 import { getRootCategories } from "@/lib/catalog/queries";
 import { categoryName } from "@/lib/catalog/names";
+import { getSessionUser } from "@/lib/auth/session";
 
 export async function SiteHeader() {
-  const [t, locale, roots] = await Promise.all([getTranslations("Header"), getLocale(), getRootCategories()]);
+  const [t, locale, roots, user] = await Promise.all([
+    getTranslations("Header"),
+    getLocale(),
+    getRootCategories(),
+    getSessionUser(),
+  ]);
   return (
     <header className="border-b border-border-subtle bg-surface-raised">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-3">
@@ -34,6 +40,12 @@ export async function SiteHeader() {
         <div className="order-3 w-full sm:order-none sm:w-auto sm:flex-1">
           <SearchBox />
         </div>
+        <Link
+          href={user ? "/cont" : "/autentificare"}
+          className="rounded-lg border border-border px-3 py-2 text-sm font-semibold"
+        >
+          {user ? t("account") : t("signIn")}
+        </Link>
       </div>
     </header>
   );

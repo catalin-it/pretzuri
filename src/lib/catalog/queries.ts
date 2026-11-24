@@ -167,43 +167,17 @@ export type PriceDrop = {
   product: { slug: string; title: string; image_path: string | null };
 };
 
-/**
- * Recent reductions for the home page: recently updated active offers whose price is below the shop's old price.
- * PostgREST cannot compare two columns, so we filter a recent window here (good enough until a dedicated RPC).
- */
+/** Recent reductions for the home page (RPC recent_price_drops, migration 0013: one offer per product, newest first). */
 export const getRecentPriceDrops = cache(async (limit = 8): Promise<PriceDrop[]> => {
-  const res = await anon()
-    .from("offers")
-    .select("id, price, old_price, first_seen_at, merchant:merchants(name), product:products!inner(slug, title, image_path, status)")
-    .eq("is_active", true)
-    .not("old_price", "is", null)
-    .eq("product.status", "active")
-    .order("updated_at", { ascending: false })
-    .limit(200);
-  const rows = (check(res, "offers") ?? []) as unknown as {
-    id: number;
-    price: number;
-    old_price: number | null;
-    first_seen_at: string;
-    merchant: { name: string } | null;
-    product: { slug: string; title: string; image_path: string | null } | null;
-  }[];
-  const seen = new Set<string>();
-  const picked = rows
-    .filter((r) => r.product && r.old_price !== null && Number(r.old_price) > Number(r.price))
-    .filter((r) => (seen.has(r.product!.slug) ? false : (seen.add(r.product!.slug), true)))
-    .slice(0, limit);
-  const lows = await Promise.all(
-    picked.map((r) => anon().rpc("offer_lowest_30d", { p_offer_id: r.id }).then((x) => (x.data === null ? null : Number(x.data)))),
-  );
-  return picked.map((r, i) => ({
-    offerId: r.id,
+  const rows = check(await anon().rpc("recent_price_drops", { p_limit: limit }), "recent_price_drops") ?? [];
+  return rows.map((r) => ({
+    offerId: Number(r.offer_id),
     price: Number(r.price),
     oldPrice: Number(r.old_price),
-    lowest30d: lows[i],
+    lowest30d: r.lowest_30d === null ? null : Number(r.lowest_30d),
     historyDays: Math.min(30, Math.floor((Date.now() - new Date(r.first_seen_at).getTime()) / 86_400_000)),
-    merchantName: r.merchant?.name ?? "",
-    product: r.product!,
+    merchantName: r.merchant_name ?? "",
+    product: { slug: r.product_slug, title: r.product_title, image_path: r.product_image_path },
   }));
 });
 
