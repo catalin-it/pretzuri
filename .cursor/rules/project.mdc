@@ -1,0 +1,7 @@
+---
+description: Pretzuri price comparison PWA project rules
+alwaysApply: true
+---
+Follow everything in /AGENTS.md (stack, rules, NAS hosting). Reply to the user in Romanian; code and docs in English.
+Next.js App Router + TypeScript strict + self-hosted Supabase on the NAS (RLS on every table). No service_role key on the client.
+No local Docker: use the scripts in infra/nas/. Never touch non-pretzuri containers on the NAS. No scraping: feeds only.

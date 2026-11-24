@@ -1,0 +1,70 @@
+# Pretzuri — Roadmap (tick boxes as tasks finish)
+Market: Romania · Model: free for users; affiliate/CPC later (disabled now) · DEV first, PROD on request
+
+## Phase 0 — Setup
+- [x] Project rules: `AGENTS.md`, `CLAUDE.md`, `.claude/agents`, `.claude/skills`, docs
+- [x] Git repo `catalin-it/pretzuri` (private), deploy key via SSH alias `github-pretzuri`
+- [ ] App skeleton: Next.js 16 + TS strict + Tailwind + next-intl (`ro` default, `en`) + Serwist + Vitest + Playwright
+- [ ] `infra/supabase` vendored (self-hosted v0.8.4) + `PRETZURI.md` with local changes, pg_cron + pg_trgm
+- [ ] `infra/nas` scripts: deploy-supabase, deploy-web, deploy-worker, db-migrate, gen-types, psql, dev-up, dev-down, backup-prod
+- [ ] Supabase DEV on the NAS (`pretzuri-dev`, 127.0.0.1:8400) + Mailpit (8425)
+- [ ] Web DEV container (`pretzuri-dev-web`, 127.0.0.1:3400)
+- [ ] Cloudflare DNS + "Always Use HTTPS", DSM Reverse Proxy rules, origin certificate (user, steps in `infra/nas/README.md`)
+- [ ] Verified: `https://dev-pretzuri.it-ist.ro/ro` and `https://api-dev-pretzuri.it-ist.ro/auth/v1/health`
+
+## Phase 1 — Database
+- [ ] Extensions (pg_trgm, pg_cron, unaccent) + FTS config `simple_unaccent`
+- [ ] Catalog: categories (seeded tree), brands (+aliases), products, product_images
+- [ ] Merchants, feed_sources, category_mappings, settings
+- [ ] Offers, price_history, 30-day lowest price functions (Omnibus)
+- [ ] Import tables: import_requests, feed_runs, feed_run_errors, match_queue
+- [ ] Users: profiles, user_roles/is_admin, favorites, price_alerts, push_subscriptions, view_history
+- [ ] Reviews (pre-moderation, reports, moderation log)
+- [ ] Clicks (+ daily aggregates), monetization tables (cpc_rates, promotions, affiliate_commissions) disabled
+- [ ] Role `feed_worker` with minimal grants; RLS audit green; SQL tests
+- [ ] pg_cron: expire offers, enqueue due feeds, retention (view_history, clicks), aggregates
+
+## Phase 2 — Feed import
+- [ ] Worker package (`worker/`), Dockerfile, compose with limits, `deploy-worker.sh`
+- [ ] pg-boss queue + `import_requests` poller
+- [ ] Download (SSRF guard, size limit, gzip, ETag) + streaming XML/CSV parsers
+- [ ] Adapters: 2Performant, Profitshare, direct (`docs/FEED-FORMAT.md`)
+- [ ] Validation + normalization (price, currency, GTIN, MPN, brand, stock, shipping, categories)
+- [ ] Matching: GTIN → brand+MPN → title similarity; match_queue
+- [ ] Upsert offers + price history + expiry + run report
+- [ ] Image cache: download, thumbnail (sharp), Storage bucket `product-images`
+- [ ] Sample feeds imported on DEV; second run proves expiry + price history
+
+## Phase 3 — Public pages
+- [ ] Layout, header search, home (categories, price drops)
+- [ ] Search (FTS + trigram), category listing with filters (price, brand, merchant, specs) and sorting
+- [ ] Product page: offers by total price, stock, merchant, price history chart, 30-day lowest, specs, JSON-LD
+- [ ] `/go/<offerId>` redirect + click counting (no personal data), sponsored/affiliate marking
+- [ ] Compare 2–4 products
+- [ ] Merchant profile page + approved reviews
+- [ ] "Cum ordonăm" (P2B), legal pages (privacy, terms, cookies, affiliate disclosure)
+- [ ] SEO: sitemap (segmented), robots, canonical, hreflang
+- [ ] PWA: manifest, service worker, offline page, install prompt
+
+## Phase 4 — Accounts & alerts
+- [ ] Auth: email code + optional password (Mailpit on DEV)
+- [ ] Favorites, view history (90 days), account deletion + data export (GDPR)
+- [ ] Price alerts: target price, push (VAPID) + email, unsubscribe
+- [ ] Merchant reviews: submit, report (DSA)
+
+## Phase 5 — Admin
+- [ ] Feed sources (CRUD, run now, run reports)
+- [ ] Category mapping
+- [ ] Matching queue (merge / reject / split)
+- [ ] Review moderation (statement of reasons)
+- [ ] Users and roles
+
+## Later
+- [ ] Merchant portal (feed submission, click statistics)
+- [ ] Monetization: CPC per merchant/category, promoted positions ("Promovat"), affiliate commissions
+- [ ] Meilisearch if Postgres search is not enough
+- [ ] PROD on the NAS, then own domain + VPS
+
+## Open decisions
+- PROD SMTP provider (free tier).
+- Answers in `docs/LEGAL-QUESTIONS.md`.

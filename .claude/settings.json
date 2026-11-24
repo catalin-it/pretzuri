@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "WebFetch",
+      "WebSearch"
+    ],
+    "ask": [
+      "Bash(bash infra/nas/deploy-supabase.sh prod*)",
+      "Bash(bash infra/nas/deploy-web.sh prod*)",
+      "Bash(bash infra/nas/deploy-worker.sh prod*)",
+      "Bash(bash infra/nas/db-migrate.sh prod --yes*)",
+      "Bash(bash infra/nas/psql.sh prod*)"
+    ],
+    "deny": [
+      "Read(./.env*)",
+      "Read(./**/.env*)",
+      "Bash(git push --force *)",
+      "Bash(git push -f *)",
+      "Bash(rm -rf *)",
+      "Bash(*docker system prune*)",
+      "Bash(*docker image prune*)",
+      "Bash(*docker volume prune*)",
+      "Bash(*docker network prune*)",
+      "Bash(*docker container prune*)",
+      "Bash(*docker builder prune*)",
+      "Bash(*docker compose down -v*)"
+    ]
+  }
+}

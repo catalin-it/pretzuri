@@ -1,0 +1,6 @@
+# Keep LF everywhere: shell scripts and SQL run on the Linux NAS.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.ico binary
+*.webp binary
