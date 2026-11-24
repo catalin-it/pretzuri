@@ -54,7 +54,7 @@ if [ "$ACTION" = "up" ]; then
     OFF=\$(grep -vxF -f /tmp/$PROJECT.on /tmp/$PROJECT.all | tr '\n' ' '); rm -f /tmp/$PROJECT.all /tmp/$PROJECT.on; \
     if [ -n \"\$OFF\" ]; then echo \"==> removing disabled services of $PROJECT: \$OFF\"; $DC rm -sf \$OFF; fi"
   nas_ssh "$DC up -d --wait"
-  nas_ssh "$DC ps --format 'table {{.Service}}\t{{.Status}}'"
+  nas_ssh "$DC ps"
 fi
 
 if [ -n "${FUNCS_CHANGED:-}" ]; then
