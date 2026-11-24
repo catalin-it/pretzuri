@@ -36,14 +36,16 @@ Market: Romania · Model: free for users; affiliate/CPC later (disabled now) · 
 - [ ] Sample feeds imported on DEV; second run proves expiry + price history
 
 ## Phase 3 — Public pages
-- [ ] Layout, header search, home (categories, price drops)
-- [ ] Search (FTS + trigram), category listing with filters (price, brand, merchant, specs) and sorting
-- [ ] Product page: offers by total price, stock, merchant, price history chart, 30-day lowest, specs, JSON-LD
-- [ ] `/go/<offerId>` redirect + click counting (no personal data), sponsored/affiliate marking
-- [ ] Compare 2–4 products
-- [ ] Merchant profile page + approved reviews
-- [ ] "Cum ordonăm" (P2B), legal pages (privacy, terms, cookies, affiliate disclosure)
-- [ ] SEO: sitemap (segmented), robots, canonical, hreflang
+- [x] Layout, header search, home (categories, price drops)
+- [x] Search (FTS + trigram), category listing with filters (price, brand, merchant, specs) and sorting
+- [x] Product page: offers by total price, stock, merchant, price history chart, 30-day lowest, specs, JSON-LD
+- [x] `/go/<offerId>` redirect + click counting (no personal data), sponsored/affiliate marking
+- [x] Compare 2–4 products
+- [x] Merchant profile page + approved reviews
+- [x] "Cum ordonăm" (P2B), legal pages (privacy, terms, cookies, affiliate disclosure) — privacy/terms are drafts
+  pending legal review (operator identity placeholder, LEGAL-QUESTIONS 1); cookies are a section of the privacy page
+- [x] SEO: sitemap, robots, canonical, hreflang — one sitemap for now (up to 20k products); split with
+  `generateSitemaps` when the catalog grows
 - [ ] PWA: manifest, service worker, offline page, install prompt
 
 ## Phase 4 — Accounts & alerts
