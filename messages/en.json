@@ -7,7 +7,8 @@
     "description": "Price comparison: shop offers, price history and alerts."
   },
   "Header": {
-    "home": "Pretzuri – home"
+    "home": "Pretzuri – home",
+    "categories": "Categories"
   },
   "Search": {
     "label": "Search for a product",
@@ -16,10 +17,22 @@
   },
   "Home": {
     "title": "Compare prices. Shop smarter.",
-    "intro": "See shop offers for the same product, ordered by total price, with price history and the lowest price of the last 30 days."
+    "intro": "See shop offers for the same product, ordered by total price, with price history and the lowest price of the last 30 days.",
+    "categories": "Categories",
+    "products": "{count, plural, =0 {no products yet} one {# product} other {# products}}",
+    "drops": "Recent price drops",
+    "lowest30": "Lowest price in the last 30 days: {price}",
+    "lowestPartial": "Lowest price in the last {days, plural, one {# day} other {# days}} (since we track this offer): {price}",
+    "totalProducts": "{count, plural, =0 {No products yet} one {# product compared} other {# products compared}}",
+    "howWeRank": "How we rank offers"
   },
   "Footer": {
-    "disclosure": "Pretzuri does not sell products. Some links are affiliate links: we may earn a commission if you buy, at no extra cost to you. Commissions do not affect the order of offers."
+    "disclosure": "Pretzuri does not sell products. Some links are affiliate links: we may earn a commission if you buy, at no extra cost to you. Commissions do not affect the order of offers.",
+    "navLabel": "Information",
+    "ranking": "How we rank offers",
+    "affiliate": "About affiliate links",
+    "privacy": "Privacy",
+    "terms": "Terms and conditions"
   },
   "Offline": {
     "title": "You are offline",
@@ -29,5 +42,267 @@
     "title": "Page not found",
     "body": "The product or page you are looking for is no longer available.",
     "home": "Back to the home page"
+  },
+  "Common": {
+    "home": "Home",
+    "breadcrumb": "Breadcrumb",
+    "legalDraft": "Draft – pending legal review. This text is not final and has no legal effect yet."
+  },
+  "Listing": {
+    "fromPrice": "from {price}",
+    "offerCount": "{count, plural, one {# offer} other {# offers}}",
+    "price": "Price (RON)",
+    "priceMin": "Min",
+    "priceMax": "Max",
+    "brands": "Brands",
+    "merchants": "Shops",
+    "apply": "Apply filters",
+    "reset": "Clear filters",
+    "filters": "Filters",
+    "results": "{count, plural, =0 {No products} one {# product} other {# products}}",
+    "sortLabel": "Sort by",
+    "sort": {
+      "relevance": "Relevance",
+      "price_asc": "Price: low to high",
+      "price_desc": "Price: high to low",
+      "offers": "Most offers",
+      "newest": "Newest"
+    },
+    "sortApply": "Apply",
+    "emptyTitle": "No products found",
+    "emptyFiltered": "Try removing some filters or widening the price range.",
+    "emptyBody": "Try other words, a brand or a product code.",
+    "pagination": "Pages",
+    "prev": "Previous",
+    "next": "Next",
+    "pageN": "Page {n}"
+  },
+  "Compare": {
+    "toggle": "Compare",
+    "toggleLabel": "Add {title} to comparison",
+    "full": "You can compare at most {max} products.",
+    "barLabel": "Product comparison",
+    "selected": "{count} of {max} products selected",
+    "go": "Compare now",
+    "needTwo": "Pick at least 2 products.",
+    "clear": "Clear"
+  },
+  "SearchPage": {
+    "title": "Search products",
+    "titleQuery": "Results for “{q}”"
+  },
+  "CategoryPage": {
+    "description": "Compare prices for {name} across Romanian online shops.",
+    "subcategories": "Subcategories"
+  },
+  "Offers": {
+    "none": "There are currently no active offers for this product.",
+    "listLabel": "Offers, ordered by total price",
+    "position": "Offer {n}:",
+    "affiliate": "Affiliate link",
+    "rating": "Rated {rating} out of 5 ({count, plural, one {# review} other {# reviews}})",
+    "noRating": "No reviews yet",
+    "availability": {
+      "in_stock": "In stock",
+      "limited": "Limited stock",
+      "out_of_stock": "Out of stock",
+      "preorder": "Pre-order",
+      "unknown": "Availability unknown"
+    },
+    "price": "Price",
+    "lowest30": "Lowest price in the last 30 days: {price}",
+    "lowestPartial": "Lowest price in the last {days, plural, one {# day} other {# days}} (since we track this offer): {price}",
+    "shippingUnknown": "shipping cost not specified",
+    "shippingFree": "Free shipping",
+    "shipping": "Shipping: {price}",
+    "shippingDays": "delivery in {days}",
+    "total": "Total: {price}",
+    "cta": "View offer",
+    "ctaSr": "at {merchant} (opens in a new tab)"
+  },
+  "PriceHistory": {
+    "empty": "We have no price history for this product yet.",
+    "summary": "Between {from} and {to}, the lowest daily price ranged from {low} to {high}; today it is {current}.",
+    "legend": "Lowest price per day, all shops (last 90 days)",
+    "max": "max {price}",
+    "min": "min {price}",
+    "tableToggle": "Show data as a table",
+    "tableCaption": "Changes of the lowest daily price",
+    "date": "Date",
+    "lowestPrice": "Lowest price"
+  },
+  "ProductPage": {
+    "metaDescription": "{title}: from {price} in {count, plural, one {# shop} other {# shops}}. Price history and the lowest price of the last 30 days.",
+    "metaDescriptionNoPrice": "{title}: compare prices from online shops.",
+    "brand": "Brand: {brand}",
+    "priceSingle": "{price} ({count, plural, one {# offer} other {# offers}})",
+    "priceRange": "From {low} to {high} ({count, plural, one {# offer} other {# offers}})",
+    "lowest30": "Lowest price in the last 30 days, all shops: {price}",
+    "favorite": "Add to favorites",
+    "alert": "Price alert",
+    "accountsSoon": "Favorites and alerts need an account (coming soon).",
+    "offersTitle": "{count, plural, =0 {Offers} one {# offer} other {# offers}}",
+    "rankingNote": "Offers are ordered by total price (price + shipping). Commissions do not affect the order.",
+    "rankingLink": "How we rank",
+    "historyTitle": "Price history",
+    "specsTitle": "Specifications",
+    "descriptionTitle": "Description"
+  },
+  "ComparePage": {
+    "title": "Product comparison",
+    "needTwo": "Pick 2–4 products in listings (the “Compare” checkbox) to compare them.",
+    "browse": "Search products",
+    "caption": "Comparison of the selected products",
+    "attribute": "Attribute",
+    "bestPrice": "Best total price",
+    "offers": "Offers",
+    "lowest30": "Lowest price (30 days)"
+  },
+  "MerchantPage": {
+    "metaDescription": "{name}: offers, rating and reviews on Pretzuri.",
+    "offers": "{count, plural, =0 {No active offers} one {# active offer} other {# active offers}}",
+    "rating": "Rated {rating} out of 5 ({count, plural, one {# review} other {# reviews}})",
+    "noRating": "No reviews yet",
+    "relationTitle": "Our relationship with this shop",
+    "affiliateYes": "We have an affiliate agreement with this shop: we may earn a commission if you buy after visiting it from Pretzuri. Its offers are marked “Affiliate link”.",
+    "affiliateNo": "We have no affiliate agreement with this shop: its offers come from a direct feed and we earn no commission.",
+    "rankingNote": "The business relationship does not affect the order of offers.",
+    "rankingLink": "How we rank",
+    "shippingTitle": "Shipping",
+    "reviewsTitle": "{count, plural, =0 {Reviews} one {# review} other {# reviews}}",
+    "reviewsNote": "Reviews are written by signed-in users and published after moderation. We cannot verify whether the author bought from the shop.",
+    "noReviews": "No published reviews yet.",
+    "stars": "{rating} out of 5 stars"
+  },
+  "Error": {
+    "title": "Something went wrong",
+    "body": "We could not load the data. Please try again in a few moments.",
+    "retry": "Try again"
+  },
+  "RankingPage": {
+    "title": "How we rank offers",
+    "intro": "On a product page, shop offers are ordered by fixed, public criteria, the same for every visitor and every shop.",
+    "sections": [
+      {
+        "h": "Main criterion: total price",
+        "p": [
+          "Offers are ordered by total price, lowest first: the product price plus the shipping cost given by the shop.",
+          "If the shop does not give us a shipping cost, the offer is ranked by its product price and shows “shipping cost not specified”. We never guess shipping costs."
+        ]
+      },
+      {
+        "h": "When total prices are equal",
+        "p": [
+          "1. Offers in stock come first (then limited stock, pre-order, unknown availability, out of stock).",
+          "2. Then the shop with the higher user rating.",
+          "3. Then alphabetically by shop name."
+        ]
+      },
+      {
+        "h": "Commissions and promoted positions",
+        "p": [
+          "Some shops pay us a commission if you buy after visiting them from Pretzuri (marked “Affiliate link”). Commissions do not affect the order of offers.",
+          "There are no paid positions today. If we introduce them, they will be shown separately from the ranked list and clearly marked “Promoted”, without changing the order above."
+        ]
+      },
+      {
+        "h": "Listings and search",
+        "p": [
+          "In listings and search you choose the order: relevance, price low to high or high to low, number of offers or newest products. The default order does not depend on any payment."
+        ]
+      }
+    ]
+  },
+  "AffiliatePage": {
+    "title": "About affiliate links",
+    "intro": "Pretzuri does not sell products. We help you compare online shop offers, and some links to shops are affiliate links.",
+    "sections": [
+      {
+        "h": "What “Affiliate link” means",
+        "p": [
+          "When an offer is labelled “Affiliate link”, the link goes through an affiliate network. If you buy, the shop may pay us a commission. Your price is the same."
+        ]
+      },
+      {
+        "h": "What commissions do not affect",
+        "p": [
+          "Commissions do not change the order of offers, the prices shown or which products we show. The order is described on the “How we rank offers” page."
+        ]
+      },
+      {
+        "h": "Shops without affiliation",
+        "p": [
+          "Some shops send us their product list directly. Links to them carry no affiliate parameters and we earn no commission."
+        ]
+      },
+      {
+        "h": "What we record on a click",
+        "p": [
+          "When you open an offer, we count the click (the offer, the page it came from and whether it looks like a bot). We do not store your IP address or other personal data."
+        ]
+      }
+    ]
+  },
+  "PrivacyPage": {
+    "title": "Privacy policy",
+    "intro": "This page describes what data we process when you use Pretzuri.",
+    "sections": [
+      {
+        "h": "Data controller",
+        "p": [
+          "[OPERATOR – legal name, company ID, registered address, contact e-mail: to be completed after legal review]"
+        ]
+      },
+      {
+        "h": "What data we process",
+        "p": [
+          "For visitors without an account: we use no tracking cookies and do not store your IP address on clicks to shops; we only keep the number of clicks per offer.",
+          "Accounts, favorites and price alerts will come later; this section will be completed then."
+        ]
+      },
+      {
+        "h": "Cookies",
+        "p": [
+          "We only use strictly necessary cookies (for example the sign-in session, once available)."
+        ]
+      },
+      {
+        "h": "Your rights",
+        "p": [
+          "You have the right of access, rectification, erasure, restriction, portability and objection, and the right to lodge a complaint with the Romanian DPA (ANSPDCP). Contact details will be completed after legal review."
+        ]
+      }
+    ]
+  },
+  "TermsPage": {
+    "title": "Terms and conditions",
+    "intro": "Terms of use of the Pretzuri price comparison service.",
+    "sections": [
+      {
+        "h": "Service provider",
+        "p": [
+          "[OPERATOR – legal name, company ID, registered address, contact e-mail: to be completed after legal review]"
+        ]
+      },
+      {
+        "h": "What we offer",
+        "p": [
+          "Pretzuri shows offers of online shops, based on data from the shops or affiliate networks. We do not sell products and are not a party to the contract between you and the shop.",
+          "Prices, stock and shipping costs can change; the shop's website at the time of ordering is authoritative."
+        ]
+      },
+      {
+        "h": "Ranking of offers",
+        "p": [
+          "The ranking criteria are published on the “How we rank offers” page."
+        ]
+      },
+      {
+        "h": "Reviews",
+        "p": [
+          "Rules for shop reviews (writing, moderation, reporting) will be published together with the review feature."
+        ]
+      }
+    ]
   }
 }

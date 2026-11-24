@@ -9,6 +9,7 @@ import { QueryProvider } from "@/components/query-provider";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SwRegister } from "@/components/pwa/sw-register";
+import { CompareBar } from "@/components/compare/compare-bar";
 import "../globals.css";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -57,6 +58,7 @@ export default async function LocaleLayout({
           <QueryProvider>
             <SiteHeader />
             <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">{children}</main>
+            <CompareBar />
             <SiteFooter />
             <SwRegister />
           </QueryProvider>

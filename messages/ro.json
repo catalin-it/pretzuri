@@ -7,7 +7,8 @@
     "description": "Comparator de prețuri: oferte din magazine, istoric de preț și alerte."
   },
   "Header": {
-    "home": "Pretzuri – pagina principală"
+    "home": "Pretzuri – pagina principală",
+    "categories": "Categorii"
   },
   "Search": {
     "label": "Caută un produs",
@@ -16,10 +17,22 @@
   },
   "Home": {
     "title": "Compară prețuri. Cumpără mai inteligent.",
-    "intro": "Vezi ofertele magazinelor pentru același produs, ordonate după prețul total, cu istoricul prețului și cel mai mic preț din ultimele 30 de zile."
+    "intro": "Vezi ofertele magazinelor pentru același produs, ordonate după prețul total, cu istoricul prețului și cel mai mic preț din ultimele 30 de zile.",
+    "categories": "Categorii",
+    "products": "{count, plural, =0 {fără produse încă} one {# produs} few {# produse} other {# de produse}}",
+    "drops": "Reduceri recente",
+    "lowest30": "Cel mai mic preț din ultimele 30 de zile: {price}",
+    "lowestPartial": "Cel mai mic preț din ultimele {days, plural, one {# zi} few {# zile} other {# de zile}} (de când urmărim oferta): {price}",
+    "totalProducts": "{count, plural, =0 {Încă nu avem produse} one {# produs comparat} few {# produse comparate} other {# de produse comparate}}",
+    "howWeRank": "Cum ordonăm ofertele"
   },
   "Footer": {
-    "disclosure": "Pretzuri nu vinde produse. Unele linkuri sunt linkuri afiliate: putem primi un comision dacă cumperi, fără cost suplimentar pentru tine. Comisioanele nu influențează ordinea ofertelor."
+    "disclosure": "Pretzuri nu vinde produse. Unele linkuri sunt linkuri afiliate: putem primi un comision dacă cumperi, fără cost suplimentar pentru tine. Comisioanele nu influențează ordinea ofertelor.",
+    "navLabel": "Informații",
+    "ranking": "Cum ordonăm ofertele",
+    "affiliate": "Despre linkurile afiliate",
+    "privacy": "Confidențialitate",
+    "terms": "Termeni și condiții"
   },
   "Offline": {
     "title": "Ești offline",
@@ -29,5 +42,267 @@
     "title": "Pagina nu există",
     "body": "Produsul sau pagina căutată nu mai este disponibilă.",
     "home": "Înapoi la pagina principală"
+  },
+  "Common": {
+    "home": "Acasă",
+    "breadcrumb": "Navigare",
+    "legalDraft": "Ciornă – în așteptarea revizuirii juridice. Acest text nu este încă final și nu are valoare juridică."
+  },
+  "Listing": {
+    "fromPrice": "de la {price}",
+    "offerCount": "{count, plural, one {# ofertă} few {# oferte} other {# de oferte}}",
+    "price": "Preț (lei)",
+    "priceMin": "Minim",
+    "priceMax": "Maxim",
+    "brands": "Mărci",
+    "merchants": "Magazine",
+    "apply": "Aplică filtrele",
+    "reset": "Șterge filtrele",
+    "filters": "Filtre",
+    "results": "{count, plural, =0 {Niciun produs} one {# produs} few {# produse} other {# de produse}}",
+    "sortLabel": "Ordonează",
+    "sort": {
+      "relevance": "Relevanță",
+      "price_asc": "Preț crescător",
+      "price_desc": "Preț descrescător",
+      "offers": "Cele mai multe oferte",
+      "newest": "Cele mai noi"
+    },
+    "sortApply": "Aplică",
+    "emptyTitle": "Nu am găsit produse",
+    "emptyFiltered": "Încearcă să elimini unele filtre sau să lărgești intervalul de preț.",
+    "emptyBody": "Încearcă alte cuvinte, o marcă sau un cod de produs.",
+    "pagination": "Pagini",
+    "prev": "Înapoi",
+    "next": "Înainte",
+    "pageN": "Pagina {n}"
+  },
+  "Compare": {
+    "toggle": "Compară",
+    "toggleLabel": "Adaugă {title} la comparație",
+    "full": "Poți compara cel mult {max} produse.",
+    "barLabel": "Comparație produse",
+    "selected": "{count} din {max} produse selectate",
+    "go": "Compară acum",
+    "needTwo": "Alege cel puțin 2 produse.",
+    "clear": "Golește"
+  },
+  "SearchPage": {
+    "title": "Caută produse",
+    "titleQuery": "Rezultate pentru „{q}”"
+  },
+  "CategoryPage": {
+    "description": "Compară prețurile pentru {name} din magazinele online din România.",
+    "subcategories": "Subcategorii"
+  },
+  "Offers": {
+    "none": "Momentan nu există oferte active pentru acest produs.",
+    "listLabel": "Oferte, ordonate după prețul total",
+    "position": "Oferta {n}:",
+    "affiliate": "Link afiliat",
+    "rating": "Rating {rating} din 5 ({count, plural, one {# recenzie} few {# recenzii} other {# de recenzii}})",
+    "noRating": "Fără recenzii încă",
+    "availability": {
+      "in_stock": "În stoc",
+      "limited": "Stoc limitat",
+      "out_of_stock": "Stoc epuizat",
+      "preorder": "Precomandă",
+      "unknown": "Disponibilitate necunoscută"
+    },
+    "price": "Preț",
+    "lowest30": "Cel mai mic preț din ultimele 30 de zile: {price}",
+    "lowestPartial": "Cel mai mic preț din ultimele {days, plural, one {# zi} few {# zile} other {# de zile}} (de când urmărim oferta): {price}",
+    "shippingUnknown": "cost livrare nespecificat",
+    "shippingFree": "Livrare gratuită",
+    "shipping": "Livrare: {price}",
+    "shippingDays": "livrare în {days}",
+    "total": "Total: {price}",
+    "cta": "Vezi oferta",
+    "ctaSr": "la {merchant} (se deschide într-o filă nouă)"
+  },
+  "PriceHistory": {
+    "empty": "Nu avem încă istoric de preț pentru acest produs.",
+    "summary": "Între {from} și {to}, cel mai mic preț zilnic a variat între {low} și {high}; astăzi este {current}.",
+    "legend": "Cel mai mic preț pe zi, toate magazinele (ultimele 90 de zile)",
+    "max": "max. {price}",
+    "min": "min. {price}",
+    "tableToggle": "Vezi datele ca tabel",
+    "tableCaption": "Modificările celui mai mic preț pe zi",
+    "date": "Data",
+    "lowestPrice": "Cel mai mic preț"
+  },
+  "ProductPage": {
+    "metaDescription": "{title}: de la {price} în {count, plural, one {# magazin} few {# magazine} other {# de magazine}}. Istoric de preț și cel mai mic preț din ultimele 30 de zile.",
+    "metaDescriptionNoPrice": "{title}: compară prețurile din magazinele online.",
+    "brand": "Marcă: {brand}",
+    "priceSingle": "{price} ({count, plural, one {# ofertă} few {# oferte} other {# de oferte}})",
+    "priceRange": "Între {low} și {high} ({count, plural, one {# ofertă} few {# oferte} other {# de oferte}})",
+    "lowest30": "Cel mai mic preț din ultimele 30 de zile, toate magazinele: {price}",
+    "favorite": "Adaugă la favorite",
+    "alert": "Alertă de preț",
+    "accountsSoon": "Favoritele și alertele necesită un cont (în curând).",
+    "offersTitle": "{count, plural, =0 {Oferte} one {# ofertă} few {# oferte} other {# de oferte}}",
+    "rankingNote": "Ofertele sunt ordonate după prețul total (preț + livrare). Comisioanele nu influențează ordinea.",
+    "rankingLink": "Cum ordonăm",
+    "historyTitle": "Istoricul prețului",
+    "specsTitle": "Specificații",
+    "descriptionTitle": "Descriere"
+  },
+  "ComparePage": {
+    "title": "Comparație produse",
+    "needTwo": "Alege 2–4 produse din listări (bifa „Compară”) pentru a le compara.",
+    "browse": "Caută produse",
+    "caption": "Comparație între produsele selectate",
+    "attribute": "Caracteristică",
+    "bestPrice": "Cel mai bun preț total",
+    "offers": "Oferte",
+    "lowest30": "Cel mai mic preț (30 de zile)"
+  },
+  "MerchantPage": {
+    "metaDescription": "{name}: oferte, rating și recenzii pe Pretzuri.",
+    "offers": "{count, plural, =0 {Nicio ofertă activă} one {# ofertă activă} few {# oferte active} other {# de oferte active}}",
+    "rating": "Rating {rating} din 5 ({count, plural, one {# recenzie} few {# recenzii} other {# de recenzii}})",
+    "noRating": "Fără recenzii încă",
+    "relationTitle": "Relația noastră cu acest magazin",
+    "affiliateYes": "Avem un acord de afiliere cu acest magazin: putem primi un comision dacă cumperi după ce ai ajuns pe site-ul lui de la noi. Ofertele lui sunt marcate „Link afiliat”.",
+    "affiliateNo": "Nu avem un acord de afiliere cu acest magazin: ofertele lui provin dintr-un feed direct și nu primim comision.",
+    "rankingNote": "Relația comercială nu influențează ordinea ofertelor.",
+    "rankingLink": "Cum ordonăm",
+    "shippingTitle": "Livrare",
+    "reviewsTitle": "{count, plural, =0 {Recenzii} one {# recenzie} few {# recenzii} other {# de recenzii}}",
+    "reviewsNote": "Recenziile sunt scrise de utilizatori autentificați și publicate după moderare. Nu putem verifica dacă autorul a cumpărat de la magazin.",
+    "noReviews": "Încă nu există recenzii publicate.",
+    "stars": "{rating} din 5 stele"
+  },
+  "Error": {
+    "title": "Ceva nu a mers",
+    "body": "Nu am putut încărca datele. Te rugăm să încerci din nou peste câteva momente.",
+    "retry": "Încearcă din nou"
+  },
+  "RankingPage": {
+    "title": "Cum ordonăm ofertele",
+    "intro": "Pe pagina unui produs, ofertele magazinelor sunt ordonate după criterii fixe și publice, aceleași pentru toți vizitatorii și toate magazinele.",
+    "sections": [
+      {
+        "h": "Criteriul principal: prețul total",
+        "p": [
+          "Ofertele sunt ordonate crescător după prețul total: prețul produsului plus costul de livrare comunicat de magazin.",
+          "Dacă magazinul nu ne comunică costul de livrare, oferta este ordonată după prețul produsului și afișează mențiunea „cost livrare nespecificat”. Nu estimăm costuri de livrare."
+        ]
+      },
+      {
+        "h": "La preț total egal",
+        "p": [
+          "1. Ofertele cu produsul în stoc sunt afișate primele (apoi stoc limitat, precomandă, disponibilitate necunoscută, stoc epuizat).",
+          "2. Apoi magazinul cu ratingul mai mare din recenziile utilizatorilor.",
+          "3. Apoi, alfabetic, după numele magazinului."
+        ]
+      },
+      {
+        "h": "Comisioane și poziții promovate",
+        "p": [
+          "Pentru unele magazine primim un comision dacă cumperi după ce ai ajuns la ele de pe Pretzuri (marcat „Link afiliat”). Comisioanele nu influențează ordinea ofertelor.",
+          "În prezent nu există poziții plătite. Dacă le vom introduce, vor fi afișate separat de lista ordonată și marcate clar „Promovat”, fără să schimbe ordinea de mai sus."
+        ]
+      },
+      {
+        "h": "Listări și căutare",
+        "p": [
+          "În listări și în căutare poți alege ordinea: relevanță, preț crescător sau descrescător, număr de oferte sau cele mai noi produse. Ordinea implicită nu depinde de nicio plată."
+        ]
+      }
+    ]
+  },
+  "AffiliatePage": {
+    "title": "Despre linkurile afiliate",
+    "intro": "Pretzuri nu vinde produse. Te ajutăm să compari ofertele magazinelor online, iar unele linkuri către magazine sunt linkuri afiliate.",
+    "sections": [
+      {
+        "h": "Ce înseamnă „Link afiliat”",
+        "p": [
+          "Când o ofertă are eticheta „Link afiliat”, linkul trece printr-o rețea de afiliere. Dacă faci o cumpărătură, magazinul ne poate plăti un comision. Prețul pentru tine este același."
+        ]
+      },
+      {
+        "h": "Ce nu influențează comisioanele",
+        "p": [
+          "Comisioanele nu schimbă ordinea ofertelor, prețurile afișate sau produsele pe care le arătăm. Ordinea este descrisă pe pagina „Cum ordonăm ofertele”."
+        ]
+      },
+      {
+        "h": "Magazine fără afiliere",
+        "p": [
+          "Unele magazine ne trimit direct lista de produse. Linkurile către ele nu au parametri de afiliere și nu primim comision."
+        ]
+      },
+      {
+        "h": "Ce înregistrăm la un clic",
+        "p": [
+          "Când deschizi o ofertă, numărăm clicul (oferta, pagina de unde vine și dacă pare a fi un robot). Nu salvăm adresa IP sau alte date personale."
+        ]
+      }
+    ]
+  },
+  "PrivacyPage": {
+    "title": "Politica de confidențialitate",
+    "intro": "Această pagină descrie ce date prelucrăm atunci când folosești Pretzuri.",
+    "sections": [
+      {
+        "h": "Operatorul de date",
+        "p": [
+          "[OPERATOR – denumire, CUI, sediu, e-mail de contact: de completat după revizuirea juridică]"
+        ]
+      },
+      {
+        "h": "Ce date prelucrăm",
+        "p": [
+          "Pentru vizitatorii fără cont: nu folosim cookie-uri de urmărire și nu salvăm adresa IP la clicurile către magazine; păstrăm doar numărul de clicuri per ofertă.",
+          "Conturile, favoritele și alertele de preț vor fi disponibile mai târziu; această secțiune va fi completată atunci."
+        ]
+      },
+      {
+        "h": "Cookie-uri",
+        "p": [
+          "Folosim doar cookie-uri strict necesare (de exemplu sesiunea de autentificare, când va exista)."
+        ]
+      },
+      {
+        "h": "Drepturile tale",
+        "p": [
+          "Ai dreptul de acces, rectificare, ștergere, restricționare, portabilitate și opoziție, precum și dreptul de a depune o plângere la ANSPDCP. Datele de contact vor fi completate după revizuirea juridică."
+        ]
+      }
+    ]
+  },
+  "TermsPage": {
+    "title": "Termeni și condiții",
+    "intro": "Termenii de utilizare a serviciului Pretzuri de comparare a prețurilor.",
+    "sections": [
+      {
+        "h": "Furnizorul serviciului",
+        "p": [
+          "[OPERATOR – denumire, CUI, sediu, e-mail de contact: de completat după revizuirea juridică]"
+        ]
+      },
+      {
+        "h": "Ce oferim",
+        "p": [
+          "Pretzuri afișează oferte ale magazinelor online, pe baza datelor primite de la acestea sau de la rețele de afiliere. Nu vindem produse și nu suntem parte la contractul dintre tine și magazin.",
+          "Prețurile, stocul și costurile de livrare se pot schimba; informația valabilă este cea de pe site-ul magazinului la momentul comenzii."
+        ]
+      },
+      {
+        "h": "Ordonarea ofertelor",
+        "p": [
+          "Criteriile de ordonare sunt publicate pe pagina „Cum ordonăm ofertele”."
+        ]
+      },
+      {
+        "h": "Recenzii",
+        "p": [
+          "Regulile pentru recenziile despre magazine (scriere, moderare, raportare) vor fi publicate odată cu funcția de recenzii."
+        ]
+      }
+    ]
   }
 }
