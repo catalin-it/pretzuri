@@ -24,3 +24,6 @@ supabase/.temp/
 # local
 .DS_Store
 .claude/settings.local.json
+
+# generated copy (infra/nas/gen-types.sh); the worker does not import it
+worker/src/db/database.types.ts
