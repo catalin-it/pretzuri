@@ -713,7 +713,7 @@
       "title": "Settings",
       "intro": "Matching thresholds and feed import limits. The worker reads the values on its next run.",
       "hintList": "At most {max} items.",
-      "hintRange": "Between {min} and {max}.",
+      "hintRange": "Between {min, number} and {max, number}.",
       "updated": "updated {date}",
       "k_match_auto": "Automatic match threshold",
       "d_match_auto": "Title score at or above which an offer is matched automatically.",

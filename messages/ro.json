@@ -712,8 +712,8 @@
     "settings": {
       "title": "Setări",
       "intro": "Praguri de potrivire și limite pentru importul feedurilor. Valorile sunt citite de worker la următoarea rulare.",
-      "hintList": "Maxim {max} elemente.",
-      "hintRange": "Între {min} și {max}.",
+      "hintList": "Maxim {max, number} elemente.",
+      "hintRange": "Între {min, number} și {max, number}.",
       "updated": "actualizat {date}",
       "k_match_auto": "Prag potrivire automată",
       "d_match_auto": "Scorul de titlu de la care o ofertă se leagă automat de un produs.",

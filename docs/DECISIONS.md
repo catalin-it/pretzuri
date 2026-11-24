@@ -53,6 +53,32 @@ Newest first within each section. Legal items should still be reviewed by a lawy
   retention (existing cron). Up to 10 push devices per account.
 - Review reports (DSA notices) require sign-in for now (schema: `reporter_id`); see LEGAL-QUESTIONS.
 
+## Admin (2026-11-25, Phase 5; agent decisions while the founder was away, review welcome)
+- `/[locale]/admin/**`: server-rendered, `noindex`, `Cache-Control: private, no-store`; **404** for anyone who is not
+  admin (layout + every page call `requireAdmin()`, every server action re-checks). The role is granted only by SQL
+  for the first admin (`infra/nas/README.md`, "Admin access"); in the UI admins grant/revoke others, never themselves.
+- **TOTP step-up is mandatory in the web UI**: an admin without an aal2 session is sent to `/admin/mfa` (enroll the
+  first TOTP factor, or enter the code). DB side, `admin_guard()` requires aal2 when the admin has a verified factor
+  (aal1 accepted only while no factor exists, e.g. SQL-only use). Plain RLS writes (merchants, feed sources) check
+  only `is_admin()`; the web enforces aal2 for them.
+- Multi-table admin operations are SECURITY DEFINER RPCs `admin_*` (migration 0020): `admin_guard()` first, one
+  transaction, a `moderation_log` row. Merchant/feed CRUD uses RLS + a log row; feed URLs (tokens) are never logged.
+- **Merge** (queue "accept" or manual by id/slug): the candidate/target survives (normally the older product). Moves
+  offers (`match_method = 'manual'`), price history, favorites, price alerts (+ pending outbox rows), view history,
+  images, promotions; on unique conflicts the survivor's row wins (view time = latest). GTINs = union; survivor
+  fields win, gaps filled from the source. Old slug (and slugs that pointed to it) → 301 to the survivor. Source:
+  `status = 'merged'`, `merged_into`; its "distinct" pairs move to the survivor; its open queue items close as
+  `merged`, and it is replaced by the survivor in other items' candidates.
+- **Reject** closes the item and stores `product_distinct` pairs for all its candidates. **Split** moves selected
+  offers (never all) to a new product (given title or the first offer's; brand/category copied; GTINs of the moved
+  offers move with them), marks the pair distinct and closes open queue items of those offers as `split`.
+- Category mapping: assigning sets the category only on products that have none (never overwrites); unmapping
+  leaves products as they are.
+- Reviews: reject/remove and DSA notice decisions need a statement of reasons (10–2000 chars), stored on the
+  review/report (shown to the author) and logged. Removing a review via a notice settles its other open notices.
+- Settings: only the known keys are editable, validated with zod and again in SQL (`admin_setting_valid`);
+  `match_review < match_auto` enforced. User list shows e-mail, dates and counts only; no editing of personal data.
+
 ## Reviews (2026-11-24)
 - Merchant reviews: only logged-in users, **pre-moderated** (visible after admin approval), "Raportează" button
   (DSA notice), moderation log with statement of reasons.

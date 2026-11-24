@@ -55,11 +55,11 @@ Market: Romania · Model: free for users; affiliate/CPC later (disabled now) · 
 - [x] Merchant reviews: submit, report (DSA)
 
 ## Phase 5 — Admin
-- [ ] Feed sources (CRUD, run now, run reports)
-- [ ] Category mapping
-- [ ] Matching queue (merge / reject / split)
-- [ ] Review moderation (statement of reasons)
-- [ ] Users and roles
+- [x] Feed sources (CRUD, run now, run reports)
+- [x] Category mapping
+- [x] Matching queue (merge / reject / split)
+- [x] Review moderation (statement of reasons)
+- [x] Users and roles
 
 ## Later
 - [ ] Merchant portal (feed submission, click statistics)

@@ -21,6 +21,24 @@ compose projects `pretzuri-dev`, `pretzuri-dev-web`, `pretzuri-dev-worker` (and 
 
 DEV runs only while we work; PROD (when deployed) runs permanently with `restart: unless-stopped`.
 
+## Admin access (bootstrap)
+The admin role is never self-service. The first admin (the founder) is granted by SQL; later admins can be granted
+or revoked in `/ro/admin/users` (never your own role).
+1. Create the account normally: sign in once at `/ro/autentificare` with the email code (DEV mail: Mailpit).
+2. Grant the role (DEV shown; PROD needs `prod --yes` and the founder's explicit go):
+   ```bash
+   echo "insert into public.user_roles (user_id, role)
+         select id, 'admin' from auth.users where email = 'founder@example.com'
+         on conflict do nothing;" | bash infra/nas/psql.sh dev -tA
+   ```
+3. Open `/ro/admin`: the first visit asks to enroll TOTP (QR code for any authenticator app); afterwards every new
+   session asks for the 6-digit code (aal2). Non-admins and anonymous visitors get a 404.
+4. Lost authenticator: delete the factor, then enroll again on the next visit:
+   `echo "delete from auth.mfa_factors where user_id = (select id from auth.users where email = 'founder@example.com');" | bash infra/nas/psql.sh dev -tA`
+5. Revoke by SQL: `delete from public.user_roles where user_id = (select id from auth.users where email = '...');`
+
+Admin RPC tests (rolled back): `bash infra/nas/psql.sh dev -tA < supabase/tests/0020_admin.test.sql` (every line `ok`).
+
 ## Layout and ports (all bound to 127.0.0.1 except Mailpit; checked free on 2026-11-24)
 | | DEV | PROD (reserved) |
 |---|---|---|
