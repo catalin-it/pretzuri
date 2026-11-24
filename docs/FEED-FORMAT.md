@@ -56,3 +56,31 @@ For partner shops that send us their products directly (no affiliate network). D
 
 Affiliate networks (2Performant, Profitshare) use their own feed formats; their field maps live in
 `worker/src/adapters/`.
+
+## Affiliate network column maps (worker defaults)
+Column/tag names are matched case-insensitively after normalization (`"Image URLs"` → `image_urls`); the first
+non-empty candidate wins, `category` joins all present candidates with ` > `. Override per feed source with
+`feed_sources.options`, e.g. `{"field_map": {"price": "pret_cu_tva", "category": ["cat1", "cat2"]}, "delimiter": ";",
+"encoding": "windows-1250", "item_tag": "item"}`.
+
+| Our field | 2Performant (CSV) | Profitshare (XML `<product>`) |
+|---|---|---|
+| id | `product_id`, `id`, `unique_id`, `sku` | `product_code`, `product_id`, `id`, `code` |
+| title | `title`, `product_name`, `name` | `product_name`, `name`, `title` |
+| description | `description`, `short_message` | `product_description`, `description` |
+| gtin | `gtin`, `ean`, `barcode`, `upc` | `product_ean`, `ean`, `gtin` |
+| brand | `brand`, `manufacturer` | `brand`, `manufacturer`, `product_brand` |
+| mpn | `mpn`, `manufacturer_code`, `model`, `part_number` | `product_mpn`, `mpn`, `part_number`, `model` |
+| category | `category` + `subcategory` | `category_name` / `category` + `subcategory_name` |
+| price | `price`, `sale_price`, `price_vat` | `product_price_vat`, `price_vat`, `product_price`, `price` |
+| old_price | `old_price`, `regular_price`, `full_price` | `product_price_old`, `old_price`, `price_old` |
+| availability | `availability`, `stock`, `in_stock`, `stock_status` | `product_availability`, `availability`, `stock` |
+| active flag (0 = skip row) | `product_active`, `active` | `product_active`, `active` |
+| shipping_cost | `shipping_cost`, `shipping`, `delivery_cost` | `shipping_cost`, `delivery_cost` |
+| url (product page) | `url`, `product_url`, `link` | `product_url`, `url`, `product_page` |
+| affiliate URL (kept unchanged) | `aff_code`, `affiliate_link`, `aff_link`, `generated_link` | `product_link`, `affiliate_link`, `link` |
+| image | `image_urls` (first of a comma list), `images`, `image_url` | `image`, `image_url`, `product_image` |
+
+When a network row has no product URL, the affiliate URL is used for both. 2Performant names are partly confirmed by
+its public feed guide; the affiliate-export columns and all Profitshare names are unverified defaults: check the
+first real feed of each network and adjust `options.field_map`.

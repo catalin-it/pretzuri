@@ -25,15 +25,15 @@ Market: Romania · Model: free for users; affiliate/CPC later (disabled now) · 
 - [x] pg_cron: expire offers, enqueue due feeds, retention (view_history, clicks), aggregates
 
 ## Phase 2 — Feed import
-- [ ] Worker package (`worker/`), Dockerfile, compose with limits, `deploy-worker.sh`
-- [ ] pg-boss queue + `import_requests` poller
-- [ ] Download (SSRF guard, size limit, gzip, ETag) + streaming XML/CSV parsers
-- [ ] Adapters: 2Performant, Profitshare, direct (`docs/FEED-FORMAT.md`)
-- [ ] Validation + normalization (price, currency, GTIN, MPN, brand, stock, shipping, categories)
-- [ ] Matching: GTIN → brand+MPN → title similarity; match_queue
-- [ ] Upsert offers + price history + expiry + run report
-- [ ] Image cache: download, thumbnail (sharp), Storage bucket `product-images`
-- [ ] Sample feeds imported on DEV; second run proves expiry + price history
+- [x] Worker package (`worker/`), Dockerfile, compose with limits, `deploy-worker.sh`
+- [x] pg-boss queue + `import_requests` poller
+- [x] Download (SSRF guard, size limit, gzip, ETag) + streaming XML/CSV parsers
+- [x] Adapters: 2Performant, Profitshare, direct (`docs/FEED-FORMAT.md`)
+- [x] Validation + normalization (price, currency, GTIN, MPN, brand, stock, shipping, categories)
+- [x] Matching: GTIN → brand+MPN → title similarity; match_queue
+- [x] Upsert offers + price history + expiry + run report
+- [ ] Image cache: download, thumbnail (sharp), Storage bucket `product-images` (not started: offers keep the shop image URL)
+- [x] Sample feeds imported on DEV; second run proves expiry + price history
 
 ## Phase 3 — Public pages
 - [x] Layout, header search, home (categories, price drops)

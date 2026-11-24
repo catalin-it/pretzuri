@@ -56,5 +56,27 @@ Newest first within each section. Legal items should still be reviewed by a lawy
   `import_requests`, which the worker moves into pg-boss. pg_cron never writes into pg-boss internal tables
   (their schema is versioned by pg-boss).
 
+## Feed import (2026-11-25)
+- Network column maps are defaults with several accepted spellings per field (`worker/src/adapters/*.ts`,
+  documented in `docs/FEED-FORMAT.md`), overridable per source via `feed_sources.options.field_map`. 2Performant
+  fields partly confirmed from its public feed guide; the affiliate-export columns and the Profitshare tags are not
+  verified (docs behind login) → check the first real feed of each network and adjust the map, not the code.
+- Network affiliate links are stored unchanged in `offers.affiliate_url`; dropped for non-affiliate merchants.
+- SSRF policy: feed URLs only `http(s)`; every hop (max 5 redirects) is resolved and refused if any address is
+  private, loopback, link-local, CGNAT, multicast or reserved (IPv4 + IPv6, incl. mapped/NAT64); the check runs in
+  the socket `lookup`, so DNS rebinding has no window. Idle timeout 60 s, size cap `settings.feed_max_bytes` on the
+  decompressed stream, gzip by header / `.gz` / magic bytes. XML: saxes, DOCTYPE rejected (no XXE).
+- Sample feeds: `https://fixtures.invalid/<name>` (or `fixture:<name>` in code/tests) reads `worker/fixtures/<name>`
+  from the image, only with `WORKER_ALLOW_FIXTURES=1` (DEV env file). `.invalid` never resolves, so the URL passes the
+  `feed_sources.url` check without a schema change and is inert anywhere fixtures are off.
+- Existing offers keep their product on later runs (no re-matching each run); only new offers are matched.
+  Title scores are computed in the worker (pg_trgm only retrieves candidates), with a numeric/variant guard:
+  different capacity/model number/RAM or variant word (Pro, Ultra, EDP/EDT, ...) is never an automatic match.
+- `price_history` gets a row for every new offer and when price, shipping or availability changes (also on
+  reactivation). Expiry is skipped (run `partial`) when valid rows < `feed_min_ratio` × previous count; such a
+  run does not lower the baseline.
+- The `feed_worker` password stays on the NAS: the role gets a SCRAM verifier computed in the worker image
+  (the DB logs DDL), the connection string lives in `worker/worker.secret.env` (mode 600).
+
 ## Versioning
 - Semver in `package.json`, starting at 0.1.0. Changelog in code (`src/lib/changelog/entries.ts`, en + ro).
