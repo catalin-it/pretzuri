@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products>
+  <product>
+    <product_code>EP-501</product_code>
+    <product_name>Samsung Galaxy S24 5G 256 GB Negru</product_name>
+    <product_description><![CDATA[<b>Samsung Galaxy S24 5G 256 GB Negru</b> - livrare rapida, garantie 2 ani.]]></product_description>
+    <product_url>https://electroplus-test.example.ro/ep-501.html</product_url>
+    <product_link>https://profitshare.ro/l/ep-501test</product_link>
+    <product_price_vat>3449,99</product_price_vat>
+    <product_price_old>3799,99</product_price_old>
+    <currency>RON</currency>
+    <category_name>Telefoane mobile</category_name>
+    <brand>SAMSUNG</brand>
+    <product_ean>8806095299914</product_ean>
+    <product_mpn>SM-S921BZKGEUE</product_mpn>
+    <image>https://electroplus-test.example.ro/img/EP-501.jpg</image>
+    <product_availability>in stock</product_availability>
+    <shipping_cost>0</shipping_cost>
+  </product>
+  <product>
+    <product_code>EP-502</product_code>
+    <product_name>Samsung Galaxy S24 Ultra 5G 512GB Titanium Gray</product_name>
+    <product_description><![CDATA[<b>Samsung Galaxy S24 Ultra 5G 512GB Titanium Gray</b> - livrare rapida, garantie 2 ani.]]></product_description>
+    <product_url>https://electroplus-test.example.ro/ep-502.html</product_url>
+    <product_link>https://profitshare.ro/l/ep-502test</product_link>
+    <product_price_vat></product_price_vat>
+    <currency>RON</currency>
+    <category_name>Telefoane mobile</category_name>
+    <brand>Samsung</brand>
+    <product_ean>8806095301051</product_ean>
+    <image>https://electroplus-test.example.ro/img/EP-502.jpg</image>
+    <product_availability>in stock</product_availability>
+    <shipping_cost>0</shipping_cost>
+  </product>
+  <product>
+    <product_code>EP-503</product_code>
+    <product_name>X</product_name>
+    <product_description><![CDATA[<b>X</b> - livrare rapida, garantie 2 ani.]]></product_description>
+    <product_url>https://electroplus-test.example.ro/ep-503.html</product_url>
+    <product_link>https://profitshare.ro/l/ep-503test</product_link>
+    <product_price_vat>3849,00</product_price_vat>
+    <currency>RON</currency>
+    <category_name>Telefoane mobile</category_name>
+    <brand>Apple</brand>
+    <image>https://electroplus-test.example.ro/img/EP-503.jpg</image>
+    <product_availability>in stock</product_availability>
+    <shipping_cost>19,99</shipping_cost>
+  </product>
+  <product>
+    <product_code>EP-504</product_code>
+    <product_name>Telefon mobil Apple iPhone 15 Pro, 128GB, Natural Titanium</product_name>
+    <product_description><![CDATA[<b>Telefon mobil Apple iPhone 15 Pro, 128GB, Natural Titanium</b> - livrare rapida, garantie 2 ani.]]></product_description>
+    <product_url>https://electroplus-test.example.ro/ep-504.html</product_url>
+    <product_link>https://profitshare.ro/l/ep-504test</product_link>
+    <product_price_vat>5299,00</product_price_vat>
+    <currency>RON</currency>
+    <category_name>Telefoane mobile</category_name>
+    <brand>Apple</brand>
+    <product_ean>5941234567890</product_ean>
+    <image>https://electroplus-test.example.ro/img/EP-504.jpg</image>
+    <product_availability>limited</product_availability>
+    <shipping_cost>19,99</shipping_cost>
+  </product>
+  <product>
+    <product_code>EP-505</product_code>
+    <product_name>Xiaomi Redmi Note 13 Pro 8GB RAM 256GB Negru</product_name>
+    <product_description><![CDATA[<b>Xiaomi Redmi Note 13 Pro 8GB RAM 256GB Negru</b> - livrare rapida, garantie 2 ani.]]></product_description>
+    <product_url>https://electroplus-test.example.ro/ep-505.html</product_url>
+    <product_link>https://profitshare.ro/l/ep-505test</product_link>
+    <product_price_vat>1299,00 EUR</product_price_vat>
+    <currency>RON</currency>
+    <category_name>Telefoane mobile</category_name>
+    <brand>Xiaomi</brand>
+    <product_ean>6941123456784</product_ean>
+    <image>https://electroplus-test.example.ro/img/EP-505.jpg</image>
+    <product_availability>in stock</product_availability>
+  </product>
+  <product>
+    <product_code></product_code>
+    <product_name>Motorola edge 50 Fusion 256GB 12GB RAM Forest Blue</product_name>
+    <product_description><![CDATA[<b>Motorola edge 50 Fusion 256GB 12GB RAM Forest Blue</b> - livrare rapida, garantie 2 ani.]]></product_description>
+    <product_url>https://electroplus-test.example.ro/.html</product_url>
+    <product_link>https://profitshare.ro/l/test</product_link>
+    <product_price_vat>1599,00</product_price_vat>
+    <currency>RON</currency>
+    <category_name>Telefoane mobile</category_name>
+    <brand>Motorola</brand>
+    <image>https://electroplus-test.example.ro/img/.jpg</image>
+    <product_availability>in stock</product_availability>
+    <shipping_cost>0</shipping_cost>
+  </product>
+</products>

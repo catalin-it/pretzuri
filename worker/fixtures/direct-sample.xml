@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products version="1">
+  <product>
+    <id>CD-1</id>
+    <title>Samsung Galaxy S24 256GB Onyx Black</title>
+    <brand>Samsung</brand>
+    <mpn>SM-S921BZKGEUE</mpn>
+    <category>Telefoane &gt; Smartphone</category>
+    <price>3399.99</price>
+    <old_price>3699.99</old_price>
+    <currency>RON</currency>
+    <availability>in_stock</availability>
+    <shipping_cost>0</shipping_cost>
+    <shipping_days>1-2</shipping_days>
+    <url>https://casadigitala-test.example.ro/p/cd-1</url>
+    <image_url>https://casadigitala-test.example.ro/img/CD-1.jpg</image_url>
+    <description>Samsung Galaxy S24 256GB Onyx Black. Garantie 2 ani.</description>
+    <specs><spec name="Stocare">256 GB</spec><spec name="RAM">8 GB</spec></specs>
+  </product>
+  <product>
+    <id>CD-2</id>
+    <title>Samsung Galaxy A55 5G 128GB Awesome Navy</title>
+    <gtin>8806095312200</gtin>
+    <brand>Samsung</brand>
+    <category>Telefoane &gt; Smartphone</category>
+    <price>1749.00</price>
+    <currency>RON</currency>
+    <availability>in_stock</availability>
+    <shipping_cost>0</shipping_cost>
+    <shipping_days>1-2</shipping_days>
+    <url>https://casadigitala-test.example.ro/p/cd-2</url>
+    <image_url>https://casadigitala-test.example.ro/img/CD-2.jpg</image_url>
+    <description>Samsung Galaxy A55 5G 128GB Awesome Navy. Garantie 2 ani.</description>
+  </product>
+  <product>
+    <id>CD-3</id>
+    <title>Apple iPhone 15 256GB Blue</title>
+    <gtin>0194253027119</gtin>
+    <brand>Apple</brand>
+    <category>Telefoane &gt; Smartphone</category>
+    <price>4399.00</price>
+    <currency>RON</currency>
+    <availability>limited</availability>
+    <shipping_cost>0</shipping_cost>
+    <shipping_days>2-3</shipping_days>
+    <url>https://casadigitala-test.example.ro/p/cd-3</url>
+    <image_url>https://casadigitala-test.example.ro/img/CD-3.jpg</image_url>
+    <description>Apple iPhone 15 256GB Blue. Garantie 2 ani.</description>
+  </product>
+  <product>
+    <id>CD-4</id>
+    <title>Apple MacBook Air 13 M2 8GB 256GB SSD Midnight</title>
+    <brand>Apple</brand>
+    <category>IT &gt; Laptopuri</category>
+    <price>4899.00</price>
+    <currency>RON</currency>
+    <availability>in_stock</availability>
+    <shipping_cost>0</shipping_cost>
+    <shipping_days>1-3</shipping_days>
+    <url>https://casadigitala-test.example.ro/p/cd-4</url>
+    <image_url>https://casadigitala-test.example.ro/img/CD-4.jpg</image_url>
+    <description>Apple MacBook Air 13 M2 8GB 256GB SSD Midnight. Garantie 2 ani.</description>
+  </product>
+  <product>
+    <id>CD-5</id>
+    <title>HP 255 G10 Ryzen 5 7530U 8GB 512GB SSD 15.6 FHD</title>
+    <brand>HP</brand>
+    <mpn>8A5G6EA</mpn>
+    <category>IT &gt; Laptopuri</category>
+    <price>2149.00</price>
+    <currency>RON</currency>
+    <availability>in_stock</availability>
+    <shipping_cost>29.99</shipping_cost>
+    <shipping_days>2-4</shipping_days>
+    <url>https://casadigitala-test.example.ro/p/cd-5</url>
+    <image_url>https://casadigitala-test.example.ro/img/CD-5.jpg</image_url>
+    <description>HP 255 G10 Ryzen 5 7530U 8GB 512GB SSD 15.6 FHD. Garantie 2 ani.</description>
+  </product>
+  <product>
+    <id>CD-6</id>
+    <title>Acer Aspire 3 A315-59 i5-1235U 16GB 512GB 15.6 FHD</title>
+    <brand>Acer</brand>
+    <mpn>NX.K6TEX.01P</mpn>
+    <category>IT &gt; Laptopuri</category>
+    <price>2299.00</price>
+    <currency>RON</currency>
+    <availability>in_stock</availability>
+    <shipping_cost>29.99</shipping_cost>
+    <url>https://casadigitala-test.example.ro/p/cd-6</url>
+    <image_url>https://casadigitala-test.example.ro/img/CD-6.jpg</image_url>
+    <description>Acer Aspire 3 A315-59 i5-1235U 16GB 512GB 15.6 FHD. Garantie 2 ani.</description>
+  </product>
+  <product>
+    <id>CD-7</id>
+    <title>Televizor Philips 50PUS8118 126 cm 4K UHD Ambilight</title>
+    <gtin>8718434567892</gtin>
+    <brand>Philips</brand>
+    <category>TV &gt; Televizoare</category>
+    <price>1849.00</price>
+    <currency>RON</currency>
+    <availability>in_stock</availability>
+    <shipping_cost>59</shipping_cost>
+    <url>https://casadigitala-test.example.ro/p/cd-7</url>
+    <image_url>https://casadigitala-test.example.ro/img/CD-7.jpg</image_url>
+    <description>Televizor Philips 50PUS8118 126 cm 4K UHD Ambilight. Garantie 2 ani.</description>
+  </product>
+  <product>
+    <id>CD-8</id>
+    <title>Televizor Samsung QE65Q60D 163 cm QLED 4K Smart</title>
+    <gtin>8806095789019</gtin>
+    <brand>Samsung</brand>
+    <category>TV &gt; Televizoare</category>
+    <price>3999.00</price>
+    <old_price>4499.00</old_price>
+    <currency>RON</currency>
+    <availability>preorder</availability>
+    <shipping_cost>59</shipping_cost>
+    <url>https://casadigitala-test.example.ro/p/cd-8</url>
+    <image_url>https://casadigitala-test.example.ro/img/CD-8.jpg</image_url>
+    <description>Televizor Samsung QE65Q60D 163 cm QLED 4K Smart. Garantie 2 ani.</description>
+  </product>
+  <product>
+    <id>CD-9</id>
+    <title>Masina de spalat Samsung WW90T534DAW 9kg 1400 rpm</title>
+    <gtin>8806095456782</gtin>
+    <brand>Samsung</brand>
+    <category>Electrocasnice &gt; Spalare</category>
+    <price>2349.00</price>
+    <currency>RON</currency>
+    <availability>in_stock</availability>
+    <shipping_cost>0</shipping_cost>
+    <url>https://casadigitala-test.example.ro/p/cd-9</url>
+    <image_url>https://casadigitala-test.example.ro/img/CD-9.jpg</image_url>
+    <description>Masina de spalat Samsung WW90T534DAW 9kg 1400 rpm. Garantie 2 ani.</description>
+  </product>
+  <product>
+    <id>CD-10</id>
+    <title>Masina de spalat rufe Whirlpool FFB 8458 BV EE 8 kg 1400 RPM Alb</title>
+    <brand>Whirlpool</brand>
+    <category>Electrocasnice &gt; Spalare</category>
+    <price>1749.00</price>
+    <currency>RON</currency>
+    <availability>out_of_stock</availability>
+    <url>https://casadigitala-test.example.ro/p/cd-10</url>
+    <image_url>https://casadigitala-test.example.ro/img/CD-10.jpg</image_url>
+    <description>Masina de spalat rufe Whirlpool FFB 8458 BV EE 8 kg 1400 RPM Alb. Garantie 2 ani.</description>
+  </product>
+  <product>
+    <id>CD-11</id>
+    <title>Laptop Lenovo IdeaPad Slim 3 15IRH8 Intel Core i5-13420H 15.6" Full HD 16GB RAM 512GB SSD Arctic Grey</title>
+    <brand>Lenovo</brand>
+    <category>IT &gt; Laptopuri</category>
+    <price>2799.00</price>
+    <currency>RON</currency>
+    <availability>in_stock</availability>
+    <shipping_cost>0</shipping_cost>
+    <url>https://casadigitala-test.example.ro/p/cd-11</url>
+    <image_url>https://casadigitala-test.example.ro/img/CD-11.jpg</image_url>
+    <description>Laptop Lenovo IdeaPad Slim 3 15IRH8 Intel Core i5-13420H 15.6" Full HD 16GB RAM 512GB SSD Arctic Grey. Garantie 2 ani.</description>
+  </product>
+</products>

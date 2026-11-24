@@ -1,0 +1,2 @@
+# Keep CRLF + BOM in this sample (tests Windows-exported CSVs).
+fixtures/direct-sample.csv -text

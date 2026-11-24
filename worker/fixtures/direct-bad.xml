@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products version="1">
+  <product>
+    <id>CD-1</id>
+    <title>Samsung Galaxy S24 256GB Onyx Black</title>
+    <brand>Samsung</brand>
+    <mpn>SM-S921BZKGEUE</mpn>
+    <category>Telefoane &gt; Smartphone</category>
+    <price>3399.99</price>
+    <old_price>3699.99</old_price>
+    <currency>RON</currency>
+    <availability>in_stock</availability>
+    <shipping_cost>0</shipping_cost>
+    <shipping_days>1-2</shipping_days>
+    <url>https://casadigitala-test.example.ro/p/cd-1</url>
+    <image_url>https://casadigitala-test.example.ro/img/CD-1.jpg</image_url>
+    <description>Samsung Galaxy S24 256GB Onyx Black. Garantie 2 ani.</description>
+    <specs><spec name="Stocare">256 GB</spec><spec name="RAM">8 GB</spec></specs>
+  </product>
+  <product>
+    <id>CD-2</id>
+    <title>Samsung Galaxy A55 5G 128GB Awesome Navy</title>
+    <gtin>8806095312200</gtin>
+    <brand>Samsung</brand>
+    <category>Telefoane &gt; Smartphone</category>
+    <price>0</price>
+    <currency>RON</currency>
+    <availability>in_stock</availability>
+    <shipping_cost>0</shipping_cost>
+    <shipping_days>1-2</shipping_days>
+    <url>https://casadigitala-test.example.ro/p/cd-2</url>
+    <image_url>https://casadigitala-test.example.ro/img/CD-2.jpg</image_url>
+    <description>Samsung Galaxy A55 5G 128GB Awesome Navy. Garantie 2 ani.</description>
+  </product>
+  <product>
+    <id>CD-3</id>
+    <gtin>0194253027119</gtin>
+    <brand>Apple</brand>
+    <category>Telefoane &gt; Smartphone</category>
+    <price>4399.00</price>
+    <currency>RON</currency>
+    <availability>limited</availability>
+    <shipping_cost>0</shipping_cost>
+    <shipping_days>2-3</shipping_days>
+    <url>https://casadigitala-test.example.ro/p/cd-3</url>
+    <image_url>https://casadigitala-test.example.ro/img/CD-3.jpg</image_url>
+    <description>. Garantie 2 ani.</description>
+  </product>
+  <product>
+    <id>CD-4</id>
+    <title>Apple MacBook Air 13 M2 8GB 256GB SSD Midnight</title>
+    <gtin>12345</gtin>
+    <brand>Apple</brand>
+    <category>IT &gt; Laptopuri</category>
+    <price>4899.00</price>
+    <currency>RON</currency>
+    <availability>in_stock</availability>
+    <shipping_cost>0</shipping_cost>
+    <shipping_days>1-3</shipping_days>
+    <url>https://casadigitala-test.example.ro/p/cd-4</url>
+    <image_url>https://casadigitala-test.example.ro/img/CD-4.jpg</image_url>
+    <description>Apple MacBook Air 13 M2 8GB 256GB SSD Midnight. Garantie 2 ani.</description>
+  </product>
+  <product>
+    <id>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</id>
+    <title>HP 255 G10 Ryzen 5 7530U 8GB 512GB SSD 15.6 FHD</title>
+    <brand>HP</brand>
+    <mpn>8A5G6EA</mpn>
+    <category>IT &gt; Laptopuri</category>
+    <price>2149.00</price>
+    <currency>RON</currency>
+    <availability>in_stock</availability>
+    <shipping_cost>29.99</shipping_cost>
+    <shipping_days>2-4</shipping_days>
+    <url>https://casadigitala-test.example.ro/p/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</url>
+    <image_url>https://casadigitala-test.example.ro/img/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.jpg</image_url>
+    <description>HP 255 G10 Ryzen 5 7530U 8GB 512GB SSD 15.6 FHD. Garantie 2 ani.</description>
+  </product>
+</products>
