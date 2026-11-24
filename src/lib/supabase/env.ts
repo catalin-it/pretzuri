@@ -27,3 +27,14 @@ export function getSupabaseEnv() {
     anonKey: parsed.data.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   };
 }
+
+/**
+ * URL for server-side catalog reads. `SUPABASE_INTERNAL_URL` (runtime, server-only) lets the web container reach
+ * the API over the Docker network or host when the public API hostname is not resolvable from inside (DEV);
+ * falls back to the public URL. Not used for session clients (cookie names derive from the public URL).
+ */
+export function getServerCatalogUrl(): string {
+  const internal = process.env.SUPABASE_INTERNAL_URL;
+  if (internal && /^https?:\/\//.test(internal)) return internal.replace(/\/$/, "");
+  return getSupabaseEnv().url;
+}
