@@ -81,3 +81,22 @@ grep -q "^COMPOSE_PROJECT_NAME=$PROJECT\$" .env || { echo "project name mismatch
 
 docker compose -p "$PROJECT" config -q
 echo "==> compose config valid for $PROJECT"
+
+# Copy ALERTS_DISPATCH_SECRET into Vault (read by kick_alerts_dispatch(), migration 0012), only when the db is running
+# and the function exists. The value travels on stdin (hex only), never on a command line, and is never printed.
+if docker compose -p "$PROJECT" ps --status running --services 2>/dev/null | grep -qx db; then
+  S="$(grep '^ALERTS_DISPATCH_SECRET=' .env | cut -d= -f2-)"
+  case "$S" in *[!0-9a-f]*|'') echo "ALERTS_DISPATCH_SECRET missing or not hex, Vault not updated" >&2 ;; *)
+    R="$(printf "\\\\set s '%s'\n%s\n" "$S" "
+select case
+  when to_regprocedure('public.kick_alerts_dispatch()') is null then 'skip'
+  when not exists (select 1 from vault.secrets where name = 'alerts_dispatch_secret')
+    then (select 'created' from vault.create_secret(:'s', 'alerts_dispatch_secret', 'x-alerts-secret for alerts-dispatch (0012)'))
+  when (select decrypted_secret from vault.decrypted_secrets where name = 'alerts_dispatch_secret') is distinct from :'s'
+    then (select 'updated' from vault.update_secret((select id from vault.secrets where name = 'alerts_dispatch_secret'), :'s'))
+  else 'unchanged' end;" | docker compose -p "$PROJECT" exec -T db psql -U postgres -X -tA -v ON_ERROR_STOP=1 2>/dev/null | tail -1)" || R=failed
+    [ -n "$R" ] || R=failed
+    unset S
+    echo "==> Vault alerts_dispatch_secret: $R" ;;
+  esac
+fi

@@ -53,6 +53,86 @@ export type Database = {
           },
         ]
       }
+      alert_outbox: {
+        Row: {
+          alert_id: number
+          attempts: number
+          claimed_at: string | null
+          created_at: string
+          email_done: boolean
+          id: number
+          last_error: string | null
+          offer_id: number | null
+          price: number
+          product_id: number
+          push_done: boolean
+          send_email: boolean
+          send_push: boolean
+          sent_at: string | null
+          status: string
+          target_price: number
+          user_id: string
+        }
+        ComputedFields: never
+        Insert: {
+          alert_id: number
+          attempts?: number
+          claimed_at?: string | null
+          created_at?: string
+          email_done?: boolean
+          id?: never
+          last_error?: string | null
+          offer_id?: number | null
+          price: number
+          product_id: number
+          push_done?: boolean
+          send_email: boolean
+          send_push: boolean
+          sent_at?: string | null
+          status?: string
+          target_price: number
+          user_id: string
+        }
+        Update: {
+          alert_id?: number
+          attempts?: number
+          claimed_at?: string | null
+          created_at?: string
+          email_done?: boolean
+          id?: never
+          last_error?: string | null
+          offer_id?: number | null
+          price?: number
+          product_id?: number
+          push_done?: boolean
+          send_email?: boolean
+          send_push?: boolean
+          sent_at?: string | null
+          status?: string
+          target_price?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "alert_outbox_alert_id_fkey"
+            columns: ["alert_id"]
+            referencedRelation: "price_alerts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "alert_outbox_offer_id_fkey"
+            columns: ["offer_id"]
+            referencedRelation: "offers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "alert_outbox_product_id_fkey"
+            columns: ["product_id"]
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       brand_aliases: {
         Row: {
           alias_norm: string
@@ -717,6 +797,9 @@ export type Database = {
           first_seen_at: string
           gtin: string | null
           id: number
+          image_checked_at: string | null
+          image_fail_count: number
+          image_last_error: string | null
           image_url: string | null
           is_active: boolean
           last_seen_at: string
@@ -747,6 +830,9 @@ export type Database = {
           first_seen_at?: string
           gtin?: string | null
           id?: never
+          image_checked_at?: string | null
+          image_fail_count?: number
+          image_last_error?: string | null
           image_url?: string | null
           is_active?: boolean
           last_seen_at?: string
@@ -776,6 +862,9 @@ export type Database = {
           first_seen_at?: string
           gtin?: string | null
           id?: never
+          image_checked_at?: string | null
+          image_fail_count?: number
+          image_last_error?: string | null
           image_url?: string | null
           is_active?: boolean
           last_seen_at?: string
@@ -1380,6 +1469,73 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_dashboard: { Args: Record<PropertyKey, never>; Returns: Json }
+      admin_decide_report: {
+        Args: {
+          p_decision: string
+          p_reason: string
+          p_remove_review?: boolean
+          p_report_id: number
+        }
+        Returns: undefined
+      }
+      admin_guard: { Args: Record<PropertyKey, never>; Returns: string }
+      admin_list_users: {
+        Args: { p_limit?: number; p_offset?: number; p_search?: string }
+        Returns: {
+          alerts_count: number
+          created_at: string
+          email: string
+          favorites_count: number
+          has_mfa: boolean
+          id: string
+          is_admin: boolean
+          last_sign_in_at: string
+          reviews_count: number
+          total_count: number
+        }[]
+      }
+      admin_log: {
+        Args: {
+          p_action: string
+          p_actor: string
+          p_details: Json
+          p_reason: string
+          p_target: string
+          p_type: string
+        }
+        Returns: undefined
+      }
+      admin_map_categories: {
+        Args: { p_category_id: number; p_mapping_ids: number[] }
+        Returns: number
+      }
+      admin_merge_products: {
+        Args: { p_queue_id?: number; p_source: number; p_target: number }
+        Returns: Json
+      }
+      admin_moderate_review: {
+        Args: { p_action: string; p_reason?: string; p_review_id: number }
+        Returns: undefined
+      }
+      admin_reject_match: {
+        Args: { p_candidate_ids?: number[]; p_queue_id: number }
+        Returns: number
+      }
+      admin_run_feed: { Args: { p_feed_source_id: number }; Returns: boolean }
+      admin_set_role: {
+        Args: { p_grant: boolean; p_user_id: string }
+        Returns: undefined
+      }
+      admin_setting_valid: {
+        Args: { p_key: string; p_value: Json }
+        Returns: boolean
+      }
+      admin_split_product: {
+        Args: { p_offer_ids: number[]; p_product_id: number; p_title?: string }
+        Returns: Json
+      }
+      admin_update_settings: { Args: { p_values: Json }; Returns: number }
       category_subtree: { Args: { p_path: string }; Returns: number[] }
       category_tree: {
         Args: Record<PropertyKey, never>
@@ -1395,10 +1551,50 @@ export type Database = {
           sort_order: number
         }[]
       }
+      claim_alert_outbox: {
+        Args: { p_limit?: number }
+        Returns: {
+          alert_id: number
+          email: string
+          locale: string
+          merchant_name: string
+          outbox_id: number
+          price: number
+          product_slug: string
+          product_title: string
+          send_email: boolean
+          send_push: boolean
+          subscriptions: Json
+          target_price: number
+        }[]
+      }
+      complete_alert_outbox: {
+        Args: {
+          p_dead_subscription_ids?: number[]
+          p_email_ok: boolean
+          p_error?: string
+          p_outbox_id: number
+          p_push_ok: boolean
+          p_used_subscription_ids?: number[]
+        }
+        Returns: undefined
+      }
+      delete_my_account: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       enqueue_due_feeds: { Args: Record<PropertyKey, never>; Returns: number }
+      evaluate_price_alerts: {
+        Args: Record<PropertyKey, never>
+        Returns: number
+      }
       expire_stale_offers: { Args: Record<PropertyKey, never>; Returns: number }
       f_unaccent: { Args: { "": string }; Returns: string }
       is_admin: { Args: Record<PropertyKey, never>; Returns: boolean }
+      kick_alerts_dispatch: {
+        Args: Record<PropertyKey, never>
+        Returns: number
+      }
       norm_text: { Args: { "": string }; Returns: string }
       offer_lowest_30d: { Args: { p_offer_id: number }; Returns: number }
       product_lowest_30d: { Args: { p_product_id: number }; Returns: number }
@@ -1429,6 +1625,20 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      recent_price_drops: {
+        Args: { p_limit?: number }
+        Returns: {
+          first_seen_at: string
+          lowest_30d: number
+          merchant_name: string
+          offer_id: number
+          old_price: number
+          price: number
+          product_image_path: string
+          product_slug: string
+          product_title: string
+        }[]
+      }
       refresh_product_stats: {
         Args: { p_product_ids: number[] }
         Returns: undefined
@@ -1437,7 +1647,12 @@ export type Database = {
         Args: { p_is_bot?: boolean; p_offer_id: number; p_source?: string }
         Returns: string
       }
+      register_push_subscription: {
+        Args: { p_auth: string; p_endpoint: string; p_p256dh: string }
+        Returns: undefined
+      }
       rollup_clicks: { Args: Record<PropertyKey, never>; Returns: undefined }
+      run_price_alerts: { Args: Record<PropertyKey, never>; Returns: number }
       search_facets: {
         Args: { p_category_path?: string; p_query?: string }
         Returns: Json
@@ -1469,6 +1684,7 @@ export type Database = {
           total_count: number
         }[]
       }
+      slugify: { Args: { p: string }; Returns: string }
     }
     Enums: {
       [_ in never]: never
