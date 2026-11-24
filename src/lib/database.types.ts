@@ -1380,6 +1380,21 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      category_subtree: { Args: { p_path: string }; Returns: number[] }
+      category_tree: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          depth: number
+          id: number
+          name_en: string
+          name_ro: string
+          parent_id: number
+          path: string
+          product_count: number
+          slug: string
+          sort_order: number
+        }[]
+      }
       enqueue_due_feeds: { Args: Record<PropertyKey, never>; Returns: number }
       expire_stale_offers: { Args: Record<PropertyKey, never>; Returns: number }
       f_unaccent: { Args: { "": string }; Returns: string }
@@ -1423,6 +1438,37 @@ export type Database = {
         Returns: string
       }
       rollup_clicks: { Args: Record<PropertyKey, never>; Returns: undefined }
+      search_facets: {
+        Args: { p_category_path?: string; p_query?: string }
+        Returns: Json
+      }
+      search_products: {
+        Args: {
+          p_brand_ids?: number[]
+          p_category_path?: string
+          p_limit?: number
+          p_merchant_ids?: number[]
+          p_offset?: number
+          p_price_max?: number
+          p_price_min?: number
+          p_query?: string
+          p_sort?: string
+          p_specs?: Json
+        }
+        Returns: {
+          brand_name: string
+          category_path: string
+          id: number
+          image_path: string
+          max_price: number
+          min_price: number
+          offer_count: number
+          rank: number
+          slug: string
+          title: string
+          total_count: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
