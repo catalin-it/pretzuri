@@ -50,5 +50,5 @@ nice -n 10 docker build -q -t "pretzuri-web:$ENV" \
   src
 unset ANON VAPID
 docker compose -p '$PROJECT' --env-file web.env up -d --wait
-docker compose -p '$PROJECT' --env-file web.env ps --format 'table {{.Service}}\t{{.Status}}\t{{.Ports}}'
+docker compose -p '$PROJECT' --env-file web.env ps
 REMOTE_SCRIPT

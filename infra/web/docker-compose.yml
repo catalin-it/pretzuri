@@ -8,7 +8,8 @@ services:
     image: pretzuri-web:${PRETZURI_ENV:?PRETZURI_ENV is required (dev|prod)}
     restart: unless-stopped
     mem_limit: 384m
-    cpus: 1.0
+    # The Synology kernel has no CFS quota support (`cpus:` fails): relative CPU weight instead (default 1024).
+    cpu_shares: 512
     ports:
       - "${WEB_BIND_IP:-127.0.0.1}:${WEB_HTTP_PORT:?WEB_HTTP_PORT is required}:3000"
     environment:
