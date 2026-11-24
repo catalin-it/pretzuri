@@ -16,7 +16,8 @@ Newest first within each section. Legal items should still be reviewed by a lawy
   are reported per import and handled in admin.
 
 ## Ranking (2026-11-24, P2B criterion, published on the "Cum ordonăm" page)
-- Offers on a product page are ordered by **total price ascending** (price + shipping).
+- Offers on a product page are ordered by **total price ascending** (price + shipping). Ties: in stock first, then
+  merchant rating, then merchant name (as offered in the founder's choice; implemented in `product_offers()`).
 - When a feed gives no shipping cost, the offer is ranked by its product price and shows the label
   "cost livrare nespecificat" (no guessed shipping).
 - Promoted positions (when enabled) are shown separately and clearly marked "Promovat"; they never change the
@@ -48,7 +49,13 @@ Newest first within each section. Legal items should still be reviewed by a lawy
 - Host ports (127.0.0.1 only, checked free on 2026-11-24; 8310 is taken by another app):
   DEV web 3400, API 8400, pooler 54342/54343 (optional), Mailpit UI 8425 (LAN);
   PROD web 3500, API 8500, pooler 54352/54353 (optional).
-- Feed worker limits: 1 CPU, 768 MB RAM, low CPU shares, no published ports.
+- Feed worker limits: 768 MB RAM, low `cpu_shares` (256), no published ports. The Synology kernel has no CFS quota
+  support, so hard CPU caps (`cpus:`) are impossible there (2026-11-25); the worker processes one job at a time and
+  builds run with `nice`. On a VPS later, add `cpus: 1.0`.
+- Realtime is off (no chat/live features): saves RAM on the NAS. Re-enable with `COMPOSE_PROFILES=realtime`.
+- DNS: the `it-ist.ro` zone is at ClouDNS, not Cloudflare (found 2026-11-25). Cloudflare proxy + "Always Use HTTPS"
+  require moving the zone to Cloudflare (recommended, user action) — see `infra/nas/README.md`, "Public access".
+  Rate limiting uses `CF-Connecting-IP`; DSM rules accept only Cloudflare IP ranges so the header cannot be forged.
 - SMTP: Mailpit on DEV; an SMTP provider on PROD (to be chosen; free tier, no paid services).
 
 ## Queue & scheduling (2026-11-24)
