@@ -159,5 +159,17 @@ Newest first within each section. Legal items should still be reviewed by a lawy
 - libvips (LGPL-3.0) ships inside sharp's prebuilt binary package, dynamically linked and replaceable: recorded as
   a conscious exception to the "no LGPL" policy in THIRD_PARTY_NOTICES (we do not modify or statically link it).
 
+## QA pass 0.3.1 (2026-11-25; agent decisions while the founder was away, review welcome)
+- Romanian prices are written "2.499,99 lei" (ICU prints "RON" for ro-RO; `formatPrice` replaces the currency
+  symbol for RON/ro). English keeps "RON 2,499.99". Alert emails keep "<amount> lei" in both languages (unchanged).
+- Setting a password: GoTrue only checks its reauthentication nonce for sessions older than 24 h (a fresh or stolen
+  session could change the password with any code). The code is now the normal 6-digit email code and is verified
+  by the server action (`verifyOtp`) before `updateUser({ password })`. GoTrue allows one code per address per
+  60 s, so asking for it within a minute of signing in shows the "too many attempts" message.
+- Unknown URLs under a locale go through `[locale]/[...rest]` (calls `notFound()`): Next's prerendered
+  `_not-found` shell has no CSP nonce and its scripts were blocked.
+- E2E runs inside a throw-away Playwright container on the NAS (`infra/nas/e2e.sh dev [spec]`) because DEV has no
+  public DNS yet; not testable there: service worker install / Web Push (need HTTPS), real SMTP delivery.
+
 ## Versioning
 - Semver in `package.json`, starting at 0.1.0. Changelog in code (`src/lib/changelog/entries.ts`, en + ro).

@@ -8,6 +8,24 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: readonly ChangelogEntry[] = [
   {
+    version: "0.3.1",
+    date: "2026-11-25",
+    items: {
+      en: [
+        "Prices in Romanian now read \"lei\" (for example 2.499,99 lei) instead of \"RON\".",
+        "Setting a password now really requires the code sent by email; a wrong code is refused.",
+        "Fixed: shops and feeds could not be saved from the admin area when the \"affiliate\" or \"active\" boxes were unchecked.",
+        "Unknown addresses show the \"page not found\" page with working scripts.",
+      ],
+      ro: [
+        "Prețurile în română apar acum cu „lei” (de exemplu 2.499,99 lei), nu cu „RON”.",
+        "Setarea parolei cere acum cu adevărat codul primit pe email; un cod greșit este refuzat.",
+        "Reparat: magazinele și feedurile nu se puteau salva din zona de administrare când bifele „afiliere” sau „activ” erau debifate.",
+        "Adresele necunoscute afișează pagina „pagina nu există” cu scripturile funcționale.",
+      ],
+    },
+  },
+  {
     version: "0.3.0",
     date: "2026-11-25",
     items: {

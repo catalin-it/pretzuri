@@ -9,12 +9,14 @@ export function bcp47(locale: Locale): string {
 
 /** Price in its currency, e.g. ro: "2.499,99 lei", en: "RON 2,499.99". */
 export function formatPrice(amount: number, locale: Locale, currency = "RON"): string {
-  return new Intl.NumberFormat(BCP47[locale], {
+  const parts = new Intl.NumberFormat(BCP47[locale], {
     style: "currency",
     currency,
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(amount);
+  }).formatToParts(amount);
+  // Current ICU/CLDR prints "RON" for ro-RO; Romanian shops (and our rules) write "lei".
+  return parts.map((p) => (p.type === "currency" && currency === "RON" && locale === "ro" ? "lei" : p.value)).join("");
 }
 
 /** Short date, e.g. ro: "24.11.2026", en: "24/11/2026". Dates are shown in Romania's time zone. */

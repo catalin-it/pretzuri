@@ -113,11 +113,15 @@ export async function updateProfile(input: z.input<typeof profileSchema>): Promi
   return OK;
 }
 
-/** Sends a reauthentication code by email (needed to set or change the password). */
+/**
+ * Sends a confirmation code by email (needed to set or change the password). It is the normal 6-digit sign-in
+ * code: GoTrue's own reauthentication nonce is only checked for sessions older than 24 h (a fresh session, or a
+ * stolen one, could change the password with ANY code), so setPassword verifies the code itself.
+ */
 export async function requestReauthCode(): Promise<ActionResult> {
   const ctx = await requireUser();
-  if (!ctx) return fail("auth");
-  const { error } = await ctx.supabase.auth.reauthenticate();
+  if (!ctx?.user.email) return fail("auth");
+  const { error } = await ctx.supabase.auth.signInWithOtp({ email: ctx.user.email, options: { shouldCreateUser: false } });
   return error ? fail(authError(error)) : OK;
 }
 
@@ -127,8 +131,13 @@ export async function setPassword(input: { password: string; code: string }): Pr
   const code = otpSchema.safeParse(input.code);
   if (!code.success) return fail("invalid_code");
   const ctx = await requireUser();
-  if (!ctx) return fail("auth");
-  const { error } = await ctx.supabase.auth.updateUser({ password: pw.data, nonce: code.data });
+  if (!ctx?.user.email) return fail("auth");
+  // The emailed code must be valid for THIS account (verifyOtp re-issues the session for the same user).
+  const verified = await ctx.supabase.auth.verifyOtp({ email: ctx.user.email, token: code.data, type: "email" });
+  if (verified.error || verified.data.user?.id !== ctx.user.id) {
+    return fail(verified.error && authError(verified.error) === "rate_limited" ? "rate_limited" : "invalid_code");
+  }
+  const { error } = await ctx.supabase.auth.updateUser({ password: pw.data });
   return error ? fail(authError(error)) : OK;
 }
 

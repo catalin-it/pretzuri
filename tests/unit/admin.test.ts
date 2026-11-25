@@ -70,6 +70,20 @@ describe("merchantSchema", () => {
   });
 });
 
+describe("unchecked checkboxes (absent from FormData)", () => {
+  it("merchant without has_affiliate / is_active keys parses as false", () => {
+    const form = { slug: "shop-x", name: "Shop X", website: "https://shop.example", affiliate_network: "" };
+    expect(merchantSchema.parse(form)).toMatchObject({ has_affiliate: false, is_active: false, affiliate_network: null });
+  });
+  it("feed without is_active key parses as inactive", () => {
+    const form = { name: "F", type: "direct_csv", url: "https://f.example/x.csv", options: "", schedule_minutes: "360" };
+    expect(feedSourceSchema.parse(form).is_active).toBe(false);
+  });
+  it("report decision without remove_review key", () => {
+    expect(decideReportSchema.parse({ report_id: "1", decision: "dismissed", reason: "Motiv suficient de lung." }).remove_review).toBe(false);
+  });
+});
+
 describe("feedSourceSchema", () => {
   const base = { name: "Feed", type: "direct_csv", url: "https://shop.example/feed.csv?token=x", options: "", schedule_minutes: "360", is_active: "on" };
   it("parses options JSON and bounds the schedule", () => {

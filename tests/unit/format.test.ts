@@ -5,8 +5,8 @@ import { dropPercent, formatDate, formatPrice } from "@/lib/format";
 const norm = (s: string) => s.replace(/[  ]/g, " ");
 
 describe("formatPrice", () => {
-  it("formats lei in Romanian", () => {
-    expect(norm(formatPrice(2499.99, "ro"))).toBe("2.499,99 RON");
+  it("formats lei in Romanian (lei, not RON)", () => {
+    expect(norm(formatPrice(2499.99, "ro"))).toBe("2.499,99 lei");
   });
   it("formats lei in English", () => {
     expect(norm(formatPrice(2499.99, "en"))).toBe("RON 2,499.99");

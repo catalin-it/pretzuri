@@ -5,8 +5,11 @@ import { z } from "zod";
 
 const slugRe = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const id = z.coerce.number().int().positive();
+// An unchecked HTML checkbox is simply ABSENT from the FormData: the key itself must be optional (Zod 4 treats a
+// missing key of a non-optional schema as an error, even when the schema accepts undefined).
 const checkbox = z
-  .union([z.literal("on"), z.literal("true"), z.literal("1"), z.literal(""), z.undefined(), z.null()])
+  .union([z.literal("on"), z.literal("true"), z.literal("1"), z.literal(""), z.null()])
+  .optional()
   .transform((v) => v === "on" || v === "true" || v === "1");
 const optionalText = (max: number) =>
   z
