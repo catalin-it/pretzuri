@@ -8,6 +8,14 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: readonly ChangelogEntry[] = [
   {
+    version: "0.3.3",
+    date: "2026-11-25",
+    items: {
+      en: ["The site now always uses a light theme (dark text on white), also on devices set to dark mode."],
+      ro: ["Site-ul folosește acum mereu tema deschisă (text închis pe alb), și pe dispozitivele setate pe modul întunecat."],
+    },
+  },
+  {
     version: "0.3.2",
     date: "2026-11-25",
     items: {
