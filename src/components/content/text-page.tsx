@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { localeAlternates } from "@/lib/seo";
 
-type Section = { h: string; p: string[] };
+type Section = { h: string; p: string[]; operator?: boolean };
 export type TextNamespace = "RankingPage" | "AffiliatePage" | "PrivacyPage" | "TermsPage";
 
 export async function textPageMetadata(locale: string, ns: TextNamespace, path: string): Promise<Metadata> {
@@ -13,7 +13,11 @@ export async function textPageMetadata(locale: string, ns: TextNamespace, path: 
 /** Text page from messages: `title`, `intro`, `sections: [{h, p: []}]`; legal drafts show a review notice. */
 export async function TextPage({ locale, ns, draft = false }: { locale: string; ns: TextNamespace; draft?: boolean }) {
   setRequestLocale(locale);
-  const [t, common] = await Promise.all([getTranslations(ns), getTranslations("Common")]);
+  const [t, common, op] = await Promise.all([
+    getTranslations(ns),
+    getTranslations("Common"),
+    getTranslations("LegalOperator"),
+  ]);
   const sections = t.raw("sections") as Section[];
   return (
     <article className="flex max-w-3xl flex-col gap-4">
@@ -30,6 +34,16 @@ export async function TextPage({ locale, ns, draft = false }: { locale: string; 
           {s.p.map((para, i) => (
             <p key={i}>{para}</p>
           ))}
+          {s.operator ? (
+            <dl className="grid grid-cols-[max-content_1fr] gap-x-4 gap-y-1">
+              {(["company", "cui", "address", "email"] as const).map((f) => (
+                <div key={f} className="contents">
+                  <dt className="font-semibold">{op(`labels.${f}`)}</dt>
+                  <dd>{op(f)}</dd>
+                </div>
+              ))}
+            </dl>
+          ) : null}
         </section>
       ))}
     </article>

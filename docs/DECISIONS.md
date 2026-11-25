@@ -171,5 +171,13 @@ Newest first within each section. Legal items should still be reviewed by a lawy
 - E2E runs inside a throw-away Playwright container on the NAS (`infra/nas/e2e.sh dev [spec]`) because DEV has no
   public DNS yet; not testable there: service worker install / Web Push (need HTTPS), real SMTP delivery.
 
+## PROD start (2026-11-25, founder)
+- PROD runs on the same NAS (`pretzuri-prod`, `-web` on 127.0.0.1:3500, gateway 127.0.0.1:8500, `-worker`).
+- DNS stays at ClouDNS (no Cloudflare): DSM reverse proxy + Let's Encrypt; GoTrue rate-limits on `X-Real-IP`.
+- SMTP: Brevo free tier (`smtp-relay.brevo.com:587`, sender `noreply@it-ist.ro`); credentials only on the NAS.
+- `NEXT_PUBLIC_NOINDEX=true` until real feeds and the operator data in the legal pages exist.
+- Demo catalog: the DEV sample shops/feeds (fixtures, `WORKER_ALLOW_FIXTURES=1` in `worker-prod.env`) are copied to
+  PROD so the site shows something. Remove them (and set the flag to 0) when real feeds are connected.
+
 ## Versioning
 - Semver in `package.json`, starting at 0.1.0. Changelog in code (`src/lib/changelog/entries.ts`, en + ro).

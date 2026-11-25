@@ -8,6 +8,20 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: readonly ChangelogEntry[] = [
   {
+    version: "0.3.2",
+    date: "2026-11-25",
+    items: {
+      en: [
+        "The privacy policy and terms now describe the real service: accounts, favorites, price alerts, view history, reviews, retention periods, processors and your rights.",
+        "The terms now explain affiliate links, review rules and how to report a review.",
+      ],
+      ro: [
+        "Politica de confidențialitate și termenii descriu acum serviciul real: conturi, favorite, alerte de preț, istoric vizualizări, recenzii, perioade de păstrare, împuterniciți și drepturile tale.",
+        "Termenii explică acum linkurile afiliate, regulile pentru recenzii și cum raportezi o recenzie.",
+      ],
+    },
+  },
+  {
     version: "0.3.1",
     date: "2026-11-25",
     items: {

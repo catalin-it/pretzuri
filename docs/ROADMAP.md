@@ -65,7 +65,7 @@ Market: Romania · Model: free for users; affiliate/CPC later (disabled now) · 
 - [ ] Merchant portal (feed submission, click statistics)
 - [ ] Monetization: CPC per merchant/category, promoted positions ("Promovat"), affiliate commissions
 - [ ] Meilisearch if Postgres search is not enough
-- [ ] PROD on the NAS, then own domain + VPS
+- [ ] PROD on the NAS (stack running since 2026-11-25; pending: DSM rules + certificate, Brevo SMTP, operator data), then own domain + VPS
 
 ## Open decisions
 - PROD SMTP provider (free tier).

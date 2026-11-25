@@ -247,31 +247,66 @@
   },
   "PrivacyPage": {
     "title": "Privacy policy",
-    "intro": "This page describes what data we process when you use Pretzuri.",
+    "intro": "This page describes what data we process when you use Pretzuri, why, how long we keep it and what rights you have.",
     "sections": [
       {
         "h": "Data controller",
         "p": [
-          "[OPERATOR – legal name, company ID, registered address, contact e-mail: to be completed after legal review]"
-        ]
+          "The data controller is:"
+        ],
+        "operator": true
       },
       {
         "h": "What data we process",
         "p": [
-          "For visitors without an account: we use no tracking cookies and do not store your IP address on clicks to shops; we only keep the number of clicks per offer.",
-          "Accounts, favorites and price alerts will come later; this section will be completed then."
+          "Account: email address, optionally a password (stored only as a hash) and optionally a display name.",
+          "Favorites: the products you save in your account.",
+          "Price alerts: the target price, the channels you chose (email and/or web push) and, for web push, the endpoint and keys of your browser subscription.",
+          "View history: products you viewed while signed in.",
+          "Merchant reviews: text and rating, pre-moderated; we keep a moderation log and the reports received (DSA).",
+          "Security logs of the authentication server.",
+          "Clicks to shops (/go): we store only the offer, the type of page the click came from and a bot flag. We do not store IP address, user id or the full user agent.",
+          "Price history contains no personal data."
+        ]
+      },
+      {
+        "h": "Legal basis",
+        "p": [
+          "Contract (Art. 6(1)(b) GDPR): the account, favorites and price alerts.",
+          "Legitimate interest (Art. 6(1)(f) GDPR): security of the service and abuse prevention.",
+          "Consent (Art. 6(1)(a) GDPR): web push notifications. You can withdraw it at any time in your browser settings or in your account."
+        ]
+      },
+      {
+        "h": "How long we keep data",
+        "p": [
+          "Account, favorites and alerts: as long as you have the account; deleted when you delete the account.",
+          "View history: 90 days, then deleted automatically.",
+          "Clicks to shops: raw rows are deleted after 30 days; only aggregated daily totals without personal data remain.",
+          "Reviews, moderation log and reports: as long as needed for moderation and DSA obligations.",
+          "Security logs: for the limited period set by the authentication server."
         ]
       },
       {
         "h": "Cookies",
         "p": [
-          "We only use strictly necessary cookies (for example the sign-in session, once available)."
+          "We use only strictly necessary cookies: the sign-in session and your chosen language. We use no third-party analytics or tracking tools."
+        ]
+      },
+      {
+        "h": "Recipients and processors",
+        "p": [
+          "Our own servers, hosted in Romania (self-hosted).",
+          "The SMTP provider Brevo (Sendinblue SAS, EU), to send emails (sign-in code, price alerts).",
+          "Browser push services (Google, Mozilla, Apple), only if you enable web push notifications."
         ]
       },
       {
         "h": "Your rights",
         "p": [
-          "You have the right of access, rectification, erasure, restriction, portability and objection, and the right to lodge a complaint with the Romanian DPA (ANSPDCP). Contact details will be completed after legal review."
+          "You have the right of access, rectification, erasure, restriction, portability and objection, and the right to withdraw consent.",
+          "Account deletion and export of your data are available directly on your account page (/cont).",
+          "You have the right to lodge a complaint with the National Supervisory Authority for Personal Data Processing (ANSPDCP): dataprivacy.ro."
         ]
       }
     ]
@@ -283,29 +318,51 @@
       {
         "h": "Service provider",
         "p": [
-          "[OPERATOR – legal name, company ID, registered address, contact e-mail: to be completed after legal review]"
-        ]
+          "The service is provided by:"
+        ],
+        "operator": true
       },
       {
         "h": "What we offer",
         "p": [
-          "Pretzuri shows offers of online shops, based on data from the shops or affiliate networks. We do not sell products and are not a party to the contract between you and the shop.",
-          "Prices, stock and shipping costs can change; the shop's website at the time of ordering is authoritative."
+          "Pretzuri shows offers from online shops, based on feeds received from them or from affiliate networks. We do not sell products and are not a party to the contract between you and the shop.",
+          "Prices come from shop feeds and may be out of date; stock and delivery costs may change. The valid information is the one on the shop's website at the time of your order."
         ]
       },
       {
-        "h": "Ranking of offers",
+        "h": "Affiliate links",
         "p": [
-          "The ranking criteria are published on the “How we rank offers” page."
+          "We may earn a commission if you buy after following an offer from Pretzuri. This does not increase your price.",
+          "These offers are marked \"Link afiliat\" (affiliate link) and the links carry rel=\"sponsored nofollow\". Paid placements are marked \"Promovat\" (promoted)."
+        ]
+      },
+      {
+        "h": "How offers are ranked",
+        "p": [
+          "The ranking criteria are published on the \"How we rank offers\" page (/cum-ordonam)."
         ]
       },
       {
         "h": "Reviews",
         "p": [
-          "Rules for shop reviews (writing, moderation, reporting) will be published together with the review feature."
+          "Merchant reviews are moderated before publication. Illegal, abusive or misleading content, or content revealing other people's personal data, is not accepted.",
+          "You can report a review with the report button. If a review is removed or rejected, its author receives a statement of reasons.",
+          "The reporting mechanism and statement of reasons follow the DSA notice-and-action rules."
         ]
       }
     ]
+  },
+  "LegalOperator": {
+    "labels": {
+      "company": "Name",
+      "cui": "Tax ID (CUI)",
+      "address": "Registered address",
+      "email": "Contact email"
+    },
+    "company": "[TO BE FILLED: company name]",
+    "cui": "[TO BE FILLED: CUI]",
+    "address": "[TO BE FILLED: registered address]",
+    "email": "[TO BE FILLED: contact email]"
   },
   "Auth": {
     "title": "Sign in",

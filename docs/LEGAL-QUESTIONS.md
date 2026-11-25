@@ -26,3 +26,7 @@ For the founder and a lawyer. Agents add questions here instead of assuming. Mar
     the same page; is a no-login one-click unsubscribe (RFC 8058) required for these transactional alerts?
 11. **DSA notices without an account:** review reports currently require sign-in. Must notice & action (Art. 16) be
     open to anyone (e.g. a form with an email address)?
+12. **Privacy/Terms texts (v0.3.2):** operator identity is still a placeholder (`LegalOperator.*` in messages).
+    Please review: retention wording for security logs (auth server default) and for reviews / moderation log /
+    DSA reports ("as long as needed", no fixed period yet), Brevo as processor (DPA signed?), and whether
+    browser push services (Google/Apple, possibly outside the EU) need extra transfer wording.

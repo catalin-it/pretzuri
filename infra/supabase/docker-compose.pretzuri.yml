@@ -45,9 +45,9 @@ services:
       # session or an email code, so a stolen session cannot plant a password. Length over composition (NIST 800-63B).
       GOTRUE_PASSWORD_MIN_LENGTH: ${AUTH_PASSWORD_MIN_LENGTH:-10}
       GOTRUE_SECURITY_UPDATE_PASSWORD_REQUIRE_REAUTHENTICATION: ${AUTH_PASSWORD_REQUIRE_REAUTH:-true}
-      # Rate limiting keyed on the real client IP. Behind Cloudflare (proxied) that is CF-Connecting-IP; the DSM rules
-      # only accept Cloudflare source IPs, so the header cannot be forged by hitting the origin directly
-      # (see infra/nas/README.md, "Cloudflare").
+      # Rate limiting keyed on the real client IP. Without Cloudflare (current setup, ClouDNS) use X-Real-IP: the DSM
+      # reverse proxy overwrites it with the TCP peer address, so clients cannot forge it. Behind a Cloudflare proxy use
+      # CF-Connecting-IP and allow only Cloudflare IPs in DSM (see infra/nas/README.md, "Public access").
       GOTRUE_RATE_LIMIT_HEADER: ${AUTH_RATE_LIMIT_HEADER:-}
       GOTRUE_RATE_LIMIT_EMAIL_SENT: ${AUTH_RATE_LIMIT_EMAIL_SENT:-30}
       GOTRUE_RATE_LIMIT_OTP: ${AUTH_RATE_LIMIT_OTP:-10}

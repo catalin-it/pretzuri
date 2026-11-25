@@ -247,31 +247,66 @@
   },
   "PrivacyPage": {
     "title": "Politica de confidențialitate",
-    "intro": "Această pagină descrie ce date prelucrăm atunci când folosești Pretzuri.",
+    "intro": "Această pagină descrie ce date prelucrăm atunci când folosești Pretzuri, de ce, cât timp le păstrăm și ce drepturi ai.",
     "sections": [
       {
         "h": "Operatorul de date",
         "p": [
-          "[OPERATOR – denumire, CUI, sediu, e-mail de contact: de completat după revizuirea juridică]"
-        ]
+          "Operatorul datelor este:"
+        ],
+        "operator": true
       },
       {
         "h": "Ce date prelucrăm",
         "p": [
-          "Pentru vizitatorii fără cont: nu folosim cookie-uri de urmărire și nu salvăm adresa IP la clicurile către magazine; păstrăm doar numărul de clicuri per ofertă.",
-          "Conturile, favoritele și alertele de preț vor fi disponibile mai târziu; această secțiune va fi completată atunci."
+          "Cont: adresa de email, opțional o parolă (stocată doar ca hash) și opțional un nume afișat.",
+          "Favorite: produsele pe care le salvezi în cont.",
+          "Alerte de preț: prețul țintă, canalele alese (email și/sau notificări web push) și, pentru web push, adresa (endpoint) și cheile abonării din browserul tău.",
+          "Istoricul vizualizărilor: produsele vizualizate, cât ești autentificat.",
+          "Recenzii despre magazine: textul și nota, pre-moderate; păstrăm un jurnal de moderare și raportările primite (DSA).",
+          "Jurnale de securitate ale serverului de autentificare.",
+          "Clicuri către magazine (/go): se stochează doar oferta, tipul paginii de pe care s-a dat clicul și un indicator de bot. Nu stocăm IP, identificator de utilizator sau user agent complet.",
+          "Istoricul prețurilor nu conține date personale."
+        ]
+      },
+      {
+        "h": "Temeiul juridic",
+        "p": [
+          "Contract (art. 6 alin. 1 lit. b GDPR): contul, favoritele și alertele de preț.",
+          "Interes legitim (art. 6 alin. 1 lit. f GDPR): securitatea serviciului și prevenirea abuzurilor.",
+          "Consimțământ (art. 6 alin. 1 lit. a GDPR): notificările web push. Îl poți retrage oricând din setările browserului sau din cont."
+        ]
+      },
+      {
+        "h": "Cât timp păstrăm datele",
+        "p": [
+          "Contul, favoritele și alertele: cât timp ai contul; se șterg la ștergerea contului.",
+          "Istoricul vizualizărilor: 90 de zile, apoi este șters automat.",
+          "Clicurile către magazine: rândurile brute se șterg după 30 de zile; rămân doar totaluri zilnice agregate, fără date personale.",
+          "Recenziile, jurnalul de moderare și raportările: cât este necesar pentru moderare și obligațiile DSA.",
+          "Jurnalele de securitate: pe durata limitată stabilită de serverul de autentificare."
         ]
       },
       {
         "h": "Cookie-uri",
         "p": [
-          "Folosim doar cookie-uri strict necesare (de exemplu sesiunea de autentificare, când va exista)."
+          "Folosim doar cookie-uri strict necesare: sesiunea de autentificare și limba aleasă. Nu folosim instrumente de analiză sau de urmărire ale terților."
+        ]
+      },
+      {
+        "h": "Destinatari și persoane împuternicite",
+        "p": [
+          "Serverele proprii, găzduite în România (self-hosted).",
+          "Furnizorul SMTP Brevo (Sendinblue SAS, UE), pentru trimiterea emailurilor (cod de autentificare, alerte de preț).",
+          "Serviciile de push ale browserelor (Google, Mozilla, Apple), doar dacă activezi notificările web push."
         ]
       },
       {
         "h": "Drepturile tale",
         "p": [
-          "Ai dreptul de acces, rectificare, ștergere, restricționare, portabilitate și opoziție, precum și dreptul de a depune o plângere la ANSPDCP. Datele de contact vor fi completate după revizuirea juridică."
+          "Ai dreptul de acces, rectificare, ștergere, restricționare, portabilitate și opoziție, precum și dreptul de a retrage consimțământul.",
+          "Ștergerea contului și exportul datelor tale sunt disponibile direct în pagina contului (/cont).",
+          "Ai dreptul de a depune o plângere la Autoritatea Națională de Supraveghere a Prelucrării Datelor cu Caracter Personal (ANSPDCP): dataprivacy.ro."
         ]
       }
     ]
@@ -283,29 +318,51 @@
       {
         "h": "Furnizorul serviciului",
         "p": [
-          "[OPERATOR – denumire, CUI, sediu, e-mail de contact: de completat după revizuirea juridică]"
-        ]
+          "Serviciul este furnizat de:"
+        ],
+        "operator": true
       },
       {
         "h": "Ce oferim",
         "p": [
-          "Pretzuri afișează oferte ale magazinelor online, pe baza datelor primite de la acestea sau de la rețele de afiliere. Nu vindem produse și nu suntem parte la contractul dintre tine și magazin.",
-          "Prețurile, stocul și costurile de livrare se pot schimba; informația valabilă este cea de pe site-ul magazinului la momentul comenzii."
+          "Pretzuri afișează oferte ale magazinelor online, pe baza feedurilor primite de la acestea sau de la rețele de afiliere. Nu vindem produse și nu suntem parte la contractul dintre tine și magazin.",
+          "Prețurile provin din feedurile magazinelor și pot fi neactualizate; stocul și costurile de livrare se pot schimba. Informația valabilă este cea de pe site-ul magazinului la momentul comenzii."
+        ]
+      },
+      {
+        "h": "Link-uri afiliate",
+        "p": [
+          "Putem câștiga un comision dacă faci o achiziție după ce ai accesat o ofertă din Pretzuri. Prețul tău nu crește din acest motiv.",
+          "Aceste oferte sunt marcate „Link afiliat”, iar linkurile au atributul rel=\"sponsored nofollow\". Ofertele plătite sunt marcate „Promovat”."
         ]
       },
       {
         "h": "Ordonarea ofertelor",
         "p": [
-          "Criteriile de ordonare sunt publicate pe pagina „Cum ordonăm ofertele”."
+          "Criteriile de ordonare sunt publicate pe pagina „Cum ordonăm ofertele” (/cum-ordonam)."
         ]
       },
       {
         "h": "Recenzii",
         "p": [
-          "Regulile pentru recenziile despre magazine (scriere, moderare, raportare) vor fi publicate odată cu funcția de recenzii."
+          "Recenziile despre magazine sunt moderate înainte de publicare. Nu sunt acceptate conținut ilegal, ofensator, înșelător sau care dezvăluie date personale ale altor persoane.",
+          "Poți raporta o recenzie cu butonul de raportare. Dacă o recenzie este eliminată sau refuzată, autorul primește o expunere de motive.",
+          "Mecanismul de raportare și expunerea de motive urmează regulile DSA privind notificarea și acțiunea."
         ]
       }
     ]
+  },
+  "LegalOperator": {
+    "labels": {
+      "company": "Denumire",
+      "cui": "CUI",
+      "address": "Sediu",
+      "email": "E-mail de contact"
+    },
+    "company": "[DE COMPLETAT: denumirea societății]",
+    "cui": "[DE COMPLETAT: CUI]",
+    "address": "[DE COMPLETAT: adresa sediului]",
+    "email": "[DE COMPLETAT: e-mail de contact]"
   },
   "Auth": {
     "title": "Autentificare",
