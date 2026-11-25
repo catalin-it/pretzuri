@@ -97,6 +97,8 @@ Cloudflare. Cloudflare's proxy and "Always Use HTTPS" only work for zones whose 
 HTTPS via a Let's Encrypt cert in DSM (needs port 80 forwarded for the HTTP-01 challenge). Plain-HTTP requests are
 not redirected (no Cloudflare, and we do not add a redirect container). Rate limiting must then use `X-Real-IP`
 (set `AUTH_RATE_LIMIT_HEADER=X-Real-IP` in `env/dev.env`).
+**DEV uses Option B since 2026-11-25** (`api-dev-pretzuri` CNAME already existed at ClouDNS; `dev.env` switched to
+`X-Real-IP`). With Option B the DSM rules use access profile **none** (or LAN + home IP for DEV), not `cloudflare-only`.
 
 ### Cloudflare records (Option A)
 - `dev-pretzuri`, `api-dev-pretzuri` (later `pretzuri`, `api-pretzuri`): A record → home public IP (or CNAME →
