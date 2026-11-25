@@ -16,6 +16,7 @@ compose projects `pretzuri-dev`, `pretzuri-dev-web`, `pretzuri-dev-worker` (and 
 | `bash infra/nas/deploy-web.sh dev` | build the web image on the NAS and (re)start it |
 | `bash infra/nas/deploy-worker.sh dev` | build the feed worker and (re)start it |
 | `bash infra/nas/db-migrate.sh dev [--dry-run]` | apply pending migrations |
+| `bash infra/nas/e2e.sh dev [spec ...]` | run the Playwright suite in a throw-away container on the NAS |
 | `bash infra/nas/gen-types.sh dev` | regenerate `src/lib/database.types.ts` (+ worker copy) |
 | `echo "select 1;" \| bash infra/nas/psql.sh dev -tA` | ad-hoc SQL |
 

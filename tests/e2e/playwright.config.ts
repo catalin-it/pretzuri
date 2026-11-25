@@ -22,5 +22,9 @@ export default defineConfig({
     ignoreHTTPSErrors: false,
     locale: "ro-RO",
   },
-  projects: [{ name: "pixel7", use: { ...devices["Pixel 7"] } }],
+  projects: [
+    { name: "pixel7", use: { ...devices["Pixel 7"] } },
+    // Desktop layout for the public pages and compare (the rest is layout-independent).
+    { name: "desktop", testMatch: /0[345]-.*.spec.ts$/, use: { ...devices["Desktop Chrome"] } },
+  ],
 });

@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./helpers/fixtures";
 
 // Home -> search -> product -> /go redirect (302, not followed to the shop). Needs imported sample data on DEV.
 test("home, search, product page and outbound click", async ({ page, request }) => {

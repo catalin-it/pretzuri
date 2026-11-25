@@ -13,3 +13,10 @@ description: Write and run Playwright end-to-end tests for Pretzuri flows (searc
 - Mobile viewport `devices['Pixel 7']` by default; desktop for compare/admin. Run once with `locale: 'en-US'`.
 - Assert by role/label/text from i18n keys, never by CSS classes. No fixed sleeps; rely on auto-waiting `expect`.
 - Run: `npx playwright test -c tests/e2e/playwright.config.ts <NN-name>`, traces `retain-on-failure`.
+- **Run on the NAS (no public DNS yet):** `bash infra/nas/e2e.sh dev [spec ...]` (or `npm run test:e2e:nas`) syncs
+  `tests/e2e` and runs Playwright in a throw-away container on the DEV docker network (web, api-gw, mailpit by name;
+  service key / Mailpit password read on the NAS, never printed). `helpers/fixtures.ts` proxies the browser's
+  Supabase calls (build-time public URL) to the gateway and fails any test with console errors or 5xx.
+- Helpers: `helpers/api.ts` (service-role REST/RPC, users, Mailpit, TOTP), `helpers/ui.ts` (sign-in),
+  `helpers/admin.ts` (throw-away admin with a freshly enrolled TOTP factor). Create fixtures through them and delete
+  them in `afterAll`. GoTrue allows one email code per address per 60 s: use password users when a test signs in twice.
